@@ -1,0 +1,22 @@
+exportPattern("^[[:alpha:]]+")
+import(Rcpp, STAAR, STAARpipeline, SCANG, dplyr, SeqArray, TxDb.Hsapiens.UCSC.hg38.knownGene, Matrix, methods, lattice)
+importFrom("stats", "pchisq", "lm", "model.matrix", "quantile", "rnorm", "binomial")
+importFrom("SeqVarTools", "isSNV")
+importFrom("GenomicFeatures", "genes", "promoters")
+importFrom("grDevices", "dev.off", "png")
+importFrom("graphics", "abline", "legend", "par", "plot")
+importFrom("utils", "modifyList", "write.csv")
+
+
+# functions
+export(Annotate_Single_Variants,
+       Dynamic_Window_Results_Summary,
+       Individual_Analysis_Results_Summary,
+       Gene_Centric_Coding_Results_Summary,
+       Gene_Centric_Noncoding_Results_Summary,
+       Sliding_Window_Results_Summary,
+       Gene_Centric_Coding_Info,
+       Gene_Centric_Noncoding_Info,
+       Single_Variants_List_Analysis,
+       Sliding_Window_Info,
+       Single_Variants_List_Analysis)
