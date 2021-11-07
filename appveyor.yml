@@ -12,8 +12,6 @@ install:
 # Adapt as necessary starting from here
 
 environment:
-  GITHUB_PAT:
-    secure: ZA36EuQkSKxhMT8evNT3GWl6YQ1l8w/b5ghkn/t8Ng90xjwzq14JHdQ3YLHpHnd5
   matrix:
   - R_VERSION: stable
     R_ARCH: x64
