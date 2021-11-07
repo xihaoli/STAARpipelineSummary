@@ -16,7 +16,7 @@ STAARpipelineSummary imports R packages <a href="https://cran.r-project.org/web/
 ## Installation
 ```
 library(devtools)
-devtools::install_github("xihaoli/STAARpipelineSummary")
+devtools::install_github("xihaoli/STAARpipelineSummary",ref="main")
 ```
 ## Usage
 Please see the <a href="docs/STAARpipelineSummary_manual.pdf">**STAARpipelineSummary** user manual</a> for detailed usage of STAARpipelineSummary package. Please see the <a href="https://github.com/xihaoli/STAARpipeline-Tutorial">**STAARpipeline** tutorial</a> for a detailed example of summarizing and visualizing association analysis results using STAARpipelineSummary.
