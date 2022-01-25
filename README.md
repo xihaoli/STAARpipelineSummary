@@ -18,10 +18,15 @@ STAARpipelineSummary imports R packages <a href="https://cran.r-project.org/web/
 library(devtools)
 devtools::install_github("xihaoli/STAARpipelineSummary",ref="main")
 ```
+## Docker Image
+A [docker image for STAARpipelineSummary](https://hub.docker.com/repository/docker/zilinli/staarpipeline), including R (version 3.6.1) built with Intel MKL and all STAAR-related packages (STAAR, SCANG, STAARpipeline, STAARpipelineSummary) pre-installed, is located in the Docker Hub. The docker image can be pulled using
+```
+docker pull zilinli/staarpipeline
+```
 ## Usage
 Please see the <a href="docs/STAARpipelineSummary_manual.pdf">**STAARpipelineSummary** user manual</a> for detailed usage of STAARpipelineSummary package. Please see the <a href="https://github.com/xihaoli/STAARpipeline-Tutorial">**STAARpipeline** tutorial</a> for a detailed example of summarizing and visualizing association analysis results using STAARpipelineSummary.
 ## Data Availability
-The whole-genome individual functional annotation data assembled from a variety of sources and the computed annotation principal components are available at the [Functional Annotation of Variant - Online Resource (FAVOR)](http://favor.genohub.org) site.
+The whole-genome individual functional annotation data assembled from a variety of sources and the computed annotation principal components are available at the [Functional Annotation of Variant - Online Resource (FAVOR)](https://favor.genohub.org) site.
 ## Version
 The current version is 0.9.6 (November 5, 2021).
 ## Citation
