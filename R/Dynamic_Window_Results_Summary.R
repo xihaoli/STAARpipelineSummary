@@ -15,7 +15,7 @@
 #' or the output from \code{fitNullModel} function in the \code{GENESIS} package and transformed using the \code{genesis2staar_nullmodel} function in the \code{STAARpipeline} package.
 #' @param known_loci a data frame of variants to be adjusted for in conditional analysis and should
 #' contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
-#' and alternative allele (ALT).
+#' and alternative allele (ALT) (default = NULL).
 #' @param method_cond a character value indicating the method for conditional analysis.
 #' \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
 #' as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
@@ -74,10 +74,10 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
                                            Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,
                                            Use_annotation_weights=FALSE,Annotation_name=NULL,alpha=0.05){
 
-  ## evaluate choices
-  method_cond <- match.arg(method_cond)
-  variant_type <- match.arg(variant_type)
-  geno_missing_imputation <- match.arg(geno_missing_imputation)
+	## evaluate choices
+	method_cond <- match.arg(method_cond)
+	variant_type <- match.arg(variant_type)
+	geno_missing_imputation <- match.arg(geno_missing_imputation)
 
 	##### SCANG_O
 	SCANG_O_res <- c()
@@ -97,7 +97,7 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	for(i in 1:sum(jobs_num$scang_num))
 	{
 		print(i)
-	  results_scang <- get(load(paste0(input_path,dynamic_window_results_name,"_",i,".Rdata")))
+		results_scang <- get(load(paste0(input_path,dynamic_window_results_name,"_",i,".Rdata")))
 
 		# SCANG-O
 		SCANG_O_emthr <- rbind(SCANG_O_emthr,results_scang$SCANG_O_emthr)
@@ -190,8 +190,8 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	emthr_genome_SCANG_B <- emthr_genome
 
 	SCANG_res <- list(SCANG_B_top1 = SCANG_B_top1, SCANG_B_emthr = emthr_genome_SCANG_B, SCANG_B_sig = SCANG_B_res,
-		SCANG_S_top1 = SCANG_S_top1, SCANG_S_emthr = emthr_genome_SCANG_S, SCANG_S_sig = SCANG_S_res,
-		SCANG_O_top1 = SCANG_O_top1, SCANG_O_emthr = emthr_genome_SCANG_O, SCANG_O_sig = SCANG_O_res,alpha=alpha)
+	                  SCANG_S_top1 = SCANG_S_top1, SCANG_S_emthr = emthr_genome_SCANG_S, SCANG_S_sig = SCANG_S_res,
+	                  SCANG_O_top1 = SCANG_O_top1, SCANG_O_emthr = emthr_genome_SCANG_O, SCANG_O_sig = SCANG_O_res,alpha=alpha)
 
 	# Output path
 	save(SCANG_res,file=paste0(output_path,"results_dynamic_window.Rdata"))
@@ -261,10 +261,10 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 				genofile <- seqOpen(gds.path)
 
 				res_cond <- Sliding_Window_cond(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,
-												start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
-												QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
-												Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
-												Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
+				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
+				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 				SCANG_S_res_cond <- rbind(SCANG_S_res_cond,res_cond)
 
@@ -322,10 +322,10 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 				genofile <- seqOpen(gds.path)
 
 				res_cond <- Sliding_Window_cond(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,
-												start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
-												QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
-												Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
-												Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
+				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
+				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 				SCANG_O_res_cond <- rbind(SCANG_O_res_cond,res_cond)
 
@@ -346,11 +346,11 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 			SCANG_O_res <- SCANG_O_res[,c(2:4,6,5,1),drop=FALSE]
 
 			## SCANG_O_cond
-			STAAR_O <- SCANG_O_res_cond[,c("STAAR-S(1,25)","STAAR-S(1,1)","STAAR-B(1,25)","STAAR-B(1,1)")]
+			STAAR_O <- SCANG_O_res_cond[,c("STAAR-S(1,25)","STAAR-S(1,1)","STAAR-B(1,25)","STAAR-B(1,1)"),drop=FALSE]
 			STAAR_O <- as.matrix(STAAR_O)
 			STAAR_O_SCANG_cond <- apply(STAAR_O,1,function(z) CCT(as.numeric(z)))
 
-			STAAR_cond <- SCANG_O_res_cond[,c("ACAT-V(1,25)","Burden(1,1)","SKAT(1,25)","STAAR-O")]
+			STAAR_cond <- SCANG_O_res_cond[,c("ACAT-V(1,25)","Burden(1,1)","SKAT(1,25)","STAAR-O"),drop=FALSE]
 
 			SCANG_O_res_uncond_cond <- cbind(SCANG_O_res,STAAR_O_SCANG_cond)
 			SCANG_O_res_uncond_cond <- cbind(SCANG_O_res_uncond_cond,STAAR_cond)
@@ -382,10 +382,10 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 				genofile <- seqOpen(gds.path)
 
 				res_cond <- Sliding_Window_cond(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,
-												start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
-												QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
-												Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
-												Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
+				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
+				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 				SCANG_B_res_cond <- rbind(SCANG_B_res_cond,res_cond)
 
@@ -406,11 +406,11 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 			SCANG_B_res <- SCANG_B_res[,c(2:4,6,5,1),drop=FALSE]
 
 			## SCANG_B_cond
-			STAAR_B <- SCANG_B_res_cond[,c("STAAR-B(1,25)","STAAR-B(1,1)")]
+			STAAR_B <- SCANG_B_res_cond[,c("STAAR-B(1,25)","STAAR-B(1,1)"),drop=FALSE]
 			STAAR_B <- as.matrix(STAAR_B)
 			STAAR_B_cond <- apply(STAAR_B,1,function(z) CCT(as.numeric(z)))
 
-			STAAR_cond <- SCANG_B_res_cond[,c("ACAT-V(1,25)","Burden(1,1)","SKAT(1,25)","STAAR-O")]
+			STAAR_cond <- SCANG_B_res_cond[,c("ACAT-V(1,25)","Burden(1,1)","SKAT(1,25)","STAAR-O"),drop=FALSE]
 
 			SCANG_B_res_uncond_cond <- cbind(SCANG_B_res,STAAR_B_cond)
 			SCANG_B_res_uncond_cond <- cbind(SCANG_B_res_uncond_cond,STAAR_cond)
@@ -421,12 +421,4 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 		write.csv(SCANG_B_res_uncond_cond,paste0(output_path,"SCANG_B_res_uncond_cond.csv"))
 	}
 }
-
-
-
-
-
-
-
-
 

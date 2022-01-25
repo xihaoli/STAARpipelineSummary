@@ -4,7 +4,7 @@ info_synonymous <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
                             Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
 
 	## evaluate choices
-  method_cond <- match.arg(method_cond)
+	method_cond <- match.arg(method_cond)
 	variant_type <- match.arg(variant_type)
 	geno_missing_imputation <- match.arg(geno_missing_imputation)
 
@@ -93,7 +93,7 @@ info_synonymous <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
 	MAF <- pmin(AF,1-AF)
 
 	########################################################
-	#           Annotation
+	#                 Annotation
 	########################################################
 
 	CHR <- as.numeric(seqGetData(genofile, "chromosome"))
@@ -131,7 +131,6 @@ info_synonymous <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
 	##########################################################
 
 	### known SNV Info
-	known_loci <- known_loci[known_loci[,1]==chr,,drop=FALSE]
 	known_loci_chr <- known_loci[known_loci[,1]==chr,,drop=FALSE]
 	known_loci_chr <- known_loci_chr[order(known_loci_chr[,2]),,drop=FALSE]
 

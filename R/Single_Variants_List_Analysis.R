@@ -15,8 +15,8 @@
 Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_nullmodel,
                                           QC_label="annotation/filter",geno_missing_imputation=c("mean","minor")){
 
-  ## evaluate choices
-  geno_missing_imputation <- match.arg(geno_missing_imputation)
+	## evaluate choices
+	geno_missing_imputation <- match.arg(geno_missing_imputation)
 
 	phenotype.id <- as.character(obj_nullmodel$id_include)
 	samplesize <- length(phenotype.id)

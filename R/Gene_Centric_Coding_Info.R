@@ -10,7 +10,7 @@
 #' @param gene_name name of the gene to be annotated.
 #' @param known_loci the data frame of variants to be adjusted for in conditional analysis and should
 #' contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
-#' and alternative allele (ALT).
+#' and alternative allele (ALT) (default = NULL).
 #' @param rare_maf_cutoff the cutoff of maximum minor allele frequency in
 #' defining rare variants (default = 0.01).
 #' @param method_cond a character value indicating the method for conditional analysis.
@@ -30,16 +30,21 @@
 #' @export
 
 Gene_Centric_Coding_Info <- function(category=c("plof","plof_ds","missense","disruptive_missense","synonymous"),
-                                     chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_cutoff=0.01,
+                                     chr,genofile,obj_nullmodel,gene_name,known_loci=NULL,rare_maf_cutoff=0.01,
                                      method_cond=c("optimal","naive"),
                                      QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
                                      Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
 
-  ## evaluate choices
-  category <- match.arg(category)
-  method_cond <- match.arg(method_cond)
-  variant_type <- match.arg(variant_type)
-  geno_missing_imputation <- match.arg(geno_missing_imputation)
+	## evaluate choices
+	category <- match.arg(category)
+	method_cond <- match.arg(method_cond)
+	variant_type <- match.arg(variant_type)
+	geno_missing_imputation <- match.arg(geno_missing_imputation)
+
+	if(is.null(known_loci))
+	{
+		known_loci <- data.frame(chr=logical(0),pos=logical(0),ref=character(0),alt=character(0))
+	}
 
 	if(category=="plof")
 	{

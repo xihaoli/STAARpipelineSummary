@@ -18,7 +18,7 @@
 #' or the output from \code{fitNullModel} function in the \code{GENESIS} package and transformed using the \code{genesis2staar_nullmodel} function in the \code{STAARpipeline} package.
 #' @param known_loci the data frame of variants to be adjusted for in conditional analysis and should
 #' contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
-#' and alternative allele (ALT).
+#' and alternative allele (ALT) (default = NULL).
 #' @param method_cond a character value indicating the method for conditional analysis.
 #' \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
 #' as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
@@ -81,10 +81,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
                                                    Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,
                                                    Use_annotation_weights=FALSE,Annotation_name=NULL,
                                                    alpha=2.5E-06,manhattan_plot=FALSE,QQ_plot=FALSE){
-  ## evaluate choices
-  method_cond <- match.arg(method_cond)
-  variant_type <- match.arg(variant_type)
-  geno_missing_imputation <- match.arg(geno_missing_imputation)
+
+	## evaluate choices
+	method_cond <- match.arg(method_cond)
+	variant_type <- match.arg(variant_type)
+	geno_missing_imputation <- match.arg(geno_missing_imputation)
 
 	#######################################################
 	#     summarize unconditional analysis results
@@ -178,7 +179,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 	for(kk in 1:ncRNA_jobs_num)
 	{
 		print(kk)
-	  results_ncRNA <- get(load(paste0(ncRNA_input_path,ncRNA_results_name,"_",kk,".Rdata")))
+		results_ncRNA <- get(load(paste0(ncRNA_input_path,ncRNA_results_name,"_",kk,".Rdata")))
 		results_ncRNA_genome <- rbind(results_ncRNA_genome,results_ncRNA)
 
 	}

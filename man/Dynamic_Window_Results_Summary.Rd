@@ -41,7 +41,7 @@ or the output from \code{fitNullModel} function in the \code{GENESIS} package an
 
 \item{known_loci}{a data frame of variants to be adjusted for in conditional analysis and should
 contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
-and alternative allele (ALT).}
+and alternative allele (ALT) (default = NULL).}
 
 \item{method_cond}{a character value indicating the method for conditional analysis.
 \code{optimal} refers to regressing residuals from the null model on \code{known_loci}

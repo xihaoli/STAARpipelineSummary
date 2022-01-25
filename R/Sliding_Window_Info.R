@@ -9,7 +9,7 @@
 #' @param end_loc ending location (position) of the genetic region to be annotated.
 #' @param known_loci the data frame of variants to be adjusted for in conditional analysis and should
 #' contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
-#' and alternative allele (ALT).
+#' and alternative allele (ALT) (default = NULL).
 #' @param rare_maf_cutoff the cutoff of maximum minor allele frequency in
 #' defining rare variants (default = 0.01).
 #' @param method_cond a character value indicating the method for conditional analysis.
@@ -28,13 +28,13 @@
 #' and annotation scores for the input variants.
 #' @export
 
-Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,known_loci,rare_maf_cutoff=0.01,
+Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,known_loci=NULL,rare_maf_cutoff=0.01,
                                 method_cond=c("optimal","naive"),
                                 QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
                                 Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
 
 	## evaluate choices
-  method_cond <- match.arg(method_cond)
+	method_cond <- match.arg(method_cond)
 	geno_missing_imputation <- match.arg(geno_missing_imputation)
 	variant_type <- match.arg(variant_type)
 
@@ -143,7 +143,10 @@ Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,kno
 	##########################################################
 
 	### known SNV Info
-	known_loci <- known_loci[known_loci[,1]==chr,,drop=FALSE]
+	if(is.null(known_loci))
+	{
+		known_loci <- data.frame(chr=logical(0),pos=logical(0),ref=character(0),alt=character(0))
+	}
 	known_loci_chr <- known_loci[known_loci[,1]==chr,,drop=FALSE]
 	known_loci_chr <- known_loci_chr[order(known_loci_chr[,2]),,drop=FALSE]
 

@@ -11,7 +11,7 @@ Individual_Analysis_Results_Summary(
   output_path,
   individual_results_name,
   obj_nullmodel,
-  known_loci,
+  known_loci = NULL,
   method_cond = c("optimal", "naive"),
   QC_label = "annotation/filter",
   geno_missing_imputation = c("mean", "minor"),
@@ -37,7 +37,7 @@ or the output from \code{fitNullModel} function in the \code{GENESIS} package an
 
 \item{known_loci}{the data frame of variants to be adjusted for in conditional analysis and should
 contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
-and alternative allele (ALT).}
+and alternative allele (ALT) (default = NULL).}
 
 \item{method_cond}{a character value indicating the method for conditional analysis.
 \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
