@@ -25,7 +25,7 @@ the following names: "CHR" (chromosome number), "POS" (position), "REF" (referen
 
 \item{Annotation_name_catalog}{a data frame containing the annotation names and the corresponding channel names in the aGDS file.}
 
-\item{Annotation_name}{a vector of names of annotation scores (default = NULL).}
+\item{Annotation_name}{a vector of annotation names used in STAAR (default = NULL).}
 }
 \value{
 a data frame containing the basic information (chromosome, position, reference allele and alternative allele)

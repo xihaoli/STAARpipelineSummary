@@ -31,7 +31,7 @@ info_enhancer_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,ra
 	enhancervpos <- as.numeric(seqGetData(genofile,"position"))
 	enhancervref <- as.character(seqGetData(genofile,"$ref"))
 	enhancervalt <- as.character(seqGetData(genofile,"$alt"))
-	dfHancerVarGene <- data.frame(enhancervchr,enhancervpos,enhancervref,enhancervalt,enhancer2GENE)
+	dfHancerrOCRsVarGene <- data.frame(enhancervchr,enhancervpos,enhancervref,enhancervalt,enhancer2GENE)
 
 	rm(varid)
 	gc()
@@ -62,18 +62,18 @@ info_enhancer_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,ra
 	variant.id <- seqGetData(genofile, "variant.id")
 	variant.id.SNV <- variant.id[SNVlist]
 
-	dfHancerVarGene.SNV <- dfHancerVarGene[SNVlist,]
-	dfHancerVarGene.SNV$enhancervpos <- as.character(dfHancerVarGene.SNV$enhancervpos)
-	dfHancerVarGene.SNV$enhancervref <- as.character(dfHancerVarGene.SNV$enhancervref)
-	dfHancerVarGene.SNV$enhancervalt <- as.character(dfHancerVarGene.SNV$enhancervalt)
+	dfHancerrOCRsVarGene.SNV <- dfHancerrOCRsVarGene[SNVlist,]
+	dfHancerrOCRsVarGene.SNV$enhancervpos <- as.character(dfHancerrOCRsVarGene.SNV$enhancervpos)
+	dfHancerrOCRsVarGene.SNV$enhancervref <- as.character(dfHancerrOCRsVarGene.SNV$enhancervref)
+	dfHancerrOCRsVarGene.SNV$enhancervalt <- as.character(dfHancerrOCRsVarGene.SNV$enhancervalt)
 
 	seqResetFilter(genofile)
 
-	rm(dfHancerVarGene)
+	rm(dfHancerrOCRsVarGene)
 	gc()
 
 	### Gene
-	is.in <- which(dfHancerVarGene.SNV[,5]==gene_name)
+	is.in <- which(dfHancerrOCRsVarGene.SNV[,5]==gene_name)
 	variant.is.in <- variant.id.SNV[is.in]
 
 	seqSetFilter(genofile,variant.id=variant.is.in,sample.id=phenotype.id)

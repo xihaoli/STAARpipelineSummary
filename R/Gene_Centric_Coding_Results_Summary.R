@@ -22,7 +22,7 @@
 #' \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 #' and taking the residuals (default = \code{optimal}).
 #' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
-#' @param variant_type variants include in the analysis. Choices include "variant", "SNV", or "Indel" (default = "SNV").
+#' @param variant_type type of variant included in the analysis. Choices include "SNV", "Indel", or "variant" (default = "SNV").
 #' @param method_cond a character value indicating the method for conditional analysis.
 #' \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
 #' as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
@@ -32,7 +32,7 @@
 #' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Use_annotation_weights use annotations as weights or not (default = FALSE).
-#' @param Annotation_name annotations used in STAAR.
+#' @param Annotation_name a vector of annotation names used in STAAR (default = NULL).
 #' @param alpha p-value threshold of significant results (default=2.5E-06).
 #' @param manhattan_plot output manhattan plot or not (default = FALSE).
 #' @param QQ_plot output Q-Q plot or not (default = FALSE).

@@ -7,7 +7,7 @@
 #' @param QC_label channel name of the QC label in the GDS/aGDS file  (default = "annotation/filter").
 #' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the annotation names and the corresponding channel names in the aGDS file.
-#' @param Annotation_name a vector of names of annotation scores (default = NULL).
+#' @param Annotation_name a vector of annotation names used in STAAR (default = NULL).
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
 #' and annotation scores for the input variants.
 #' @export

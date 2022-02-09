@@ -53,7 +53,7 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{geno_missing_imputation}{method of handling missing genotypes. Either "mean" or "minor" (default = "mean").}
 
-\item{variant_type}{variants include in the conditional analysis. Choice includes "variant", "SNV", or "Indel"  (default = "SNV").}
+\item{variant_type}{type of variant included in the conditional analysis. Choice includes "SNV", "Indel", or "variant"  (default = "SNV").}
 
 \item{Annotation_dir}{channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").}
 
@@ -61,7 +61,7 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{Use_annotation_weights}{use annotations as weights or not (default = FALSE).}
 
-\item{Annotation_name}{a vector of names of annotation scores used in variant-set test (default = NULL).}
+\item{Annotation_name}{a vector of annotation names used in SCANG-STAAR (default = NULL).}
 
 \item{alpha}{threshod to control the genome-wise (family-wise) error rate (default = 0.05).}
 }

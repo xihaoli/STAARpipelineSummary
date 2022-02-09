@@ -50,7 +50,7 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{QC_label}{channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").}
 
-\item{variant_type}{variants include in the conditional analysis. Choices include "variant", "SNV", or "Indel" (default = "SNV").}
+\item{variant_type}{type of variant included in the conditional analysis. Choices include "SNV", "Indel", or "variant" (default = "SNV").}
 
 \item{geno_missing_imputation}{method of handling missing genotypes. Either "mean" or "minor" (default = "mean").}
 
@@ -58,7 +58,7 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{Annotation_name_catalog}{a data frame containing the name and the corresponding channel name in the aGDS file.}
 
-\item{Annotation_name}{a vector of names of annotation scores (default = NULL).}
+\item{Annotation_name}{a vector of annotation names used in STAAR (default = NULL).}
 }
 \value{
 a data frame containing the basic information (chromosome, position, reference allele and alternative allele),

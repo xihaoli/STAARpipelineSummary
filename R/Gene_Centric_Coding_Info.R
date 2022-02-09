@@ -19,11 +19,11 @@
 #' \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 #' and taking the residuals (default = \code{optimal}).
 #' @param QC_label channel name of the QC label in the GDS/aGDS file.
-#' @param variant_type variants include in the conditional analysis. Choices include "variant", "SNV", or "Indel" (default = "SNV").
+#' @param variant_type type of variant included in the conditional analysis. Choices include "SNV", "Indel", or "variant" (default = "SNV").
 #' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
 #' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
-#' @param Annotation_name a vector of names of annotation scores (default = NULL).
+#' @param Annotation_name a vector of annotation names used in STAAR (default = NULL).
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
 #' unconditional and conditional the score test p-values,
 #' and annotation scores for the rare variants of the input coding mask.
