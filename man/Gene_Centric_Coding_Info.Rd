@@ -18,7 +18,7 @@ Gene_Centric_Coding_Info(
   geno_missing_imputation = c("mean", "minor"),
   Annotation_dir = "annotation/info/FunctionalAnnotation",
   Annotation_name_catalog,
-  Annotation_name = NULL
+  Annotation_name
 )
 }
 \arguments{
@@ -57,7 +57,7 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{Annotation_name_catalog}{a data frame containing the name and the corresponding channel name in the aGDS file.}
 
-\item{Annotation_name}{a vector of annotation names used in STAAR (default = NULL).}
+\item{Annotation_name}{a vector of qualitative/quantitative annotation names user wants to extract.}
 }
 \value{
 a data frame containing the basic information (chromosome, position, reference allele and alternative allele),

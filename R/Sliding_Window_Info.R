@@ -22,7 +22,7 @@
 #' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
 #' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
-#' @param Annotation_name a vector of names of annotation scores (default = NULL).
+#' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
 #' unconditional and conditional the score test p-values,
 #' and annotation scores for the input variants.
@@ -31,7 +31,7 @@
 Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,known_loci=NULL,rare_maf_cutoff=0.01,
                                 method_cond=c("optimal","naive"),
                                 QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
-                                Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
+                                Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
@@ -63,7 +63,7 @@ Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,kno
 	position <- as.numeric(seqGetData(genofile, "position"))
 
 	is.in <- (SNVlist)&(position>=start_loc)&(position<=end_loc)
-    seqSetFilter(genofile,variant.id=variant.id[is.in],sample.id=phenotype.id)
+	seqSetFilter(genofile,variant.id=variant.id[is.in],sample.id=phenotype.id)
 
 	## genotype id
 	id.genotype <- seqGetData(genofile,"sample.id")
@@ -250,3 +250,4 @@ Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,kno
 	seqResetFilter(genofile)
 	return(Info_Basic_Anno)
 }
+

@@ -1,7 +1,7 @@
 info_promoter_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_cutoff=0.01,
                               method_cond=c("optimal","naive"),
                               QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
-                              Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
+                              Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
@@ -15,16 +15,15 @@ info_promoter_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,ra
 	txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 	promGobj <- promoters(genes(txdb), upstream = 3000, downstream = 3000)
 
-	# Subsetting Promoters that within +/-3kb of TSS and have rOCRs signals
+	# Subsetting promoters that within +/-3kb of TSS and have rOCRs signals
 	rOCRsAnno <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="DHS")]))
 	rOCRsBvt <- rOCRsAnno!=""
 	rOCRsidx <- which(rOCRsBvt,useNames=TRUE)
 	seqSetFilter(genofile,variant.id=varid[rOCRsidx])
-
 	seqSetFilter(genofile,promGobj,intersect=TRUE)
 	rOCRspromgene <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GENCODE.Info")]))
 	rOCRsGene <- unlist(lapply(strsplit(rOCRspromgene,"\\(|\\,|;|-"),`[[`,1))
-	## obtain variants info
+	# Obtain variants info
 	rOCRsvchr <- as.numeric(seqGetData(genofile,"chromosome"))
 	rOCRsvpos <- as.numeric(seqGetData(genofile,"position"))
 	rOCRsvref <- as.character(seqGetData(genofile,"$ref"))
@@ -257,3 +256,4 @@ info_promoter_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,ra
 	seqResetFilter(genofile)
 	return(Info_Basic_Anno)
 }
+

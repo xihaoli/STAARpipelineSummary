@@ -1,7 +1,7 @@
 info_promoter_CAGE <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_cutoff=0.01,
                                method_cond=c("optimal","naive"),
                                QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
-                               Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
+                               Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
@@ -15,7 +15,7 @@ info_promoter_CAGE <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,r
 	txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 	promGobj <- promoters(genes(txdb), upstream = 3000, downstream = 3000)
 
-	#Subsetting Promoters that within +/-3kb of TSS and have CAGE signals
+	# Subsetting promoters that within +/-3kb of TSS and have CAGE signals
 	CAGEAnno <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="CAGE")]))
 	CAGEBvt <- CAGEAnno!=""
 	CAGEidx <- which(CAGEBvt,useNames=TRUE)
@@ -23,7 +23,7 @@ info_promoter_CAGE <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,r
 	seqSetFilter(genofile,promGobj,intersect=TRUE)
 	CAGEpromgene <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GENCODE.Info")]))
 	CAGEGene <- unlist(lapply(strsplit(CAGEpromgene,"\\(|\\,|;|-"),`[[`,1))
-	##obtain variants info
+	# Obtain variants info
 	CAGEvchr <- as.numeric(seqGetData(genofile,"chromosome"))
 	CAGEvpos <- as.numeric(seqGetData(genofile,"position"))
 	CAGEvref <- as.character(seqGetData(genofile,"$ref"))
@@ -256,3 +256,4 @@ info_promoter_CAGE <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,r
 	seqResetFilter(genofile)
 	return(Info_Basic_Anno)
 }
+

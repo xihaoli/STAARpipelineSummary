@@ -78,8 +78,7 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 	save(results_sig,file=paste0(output_path,"results_individual_analysis_sig.Rdata"))
 	write.csv(results_sig,paste0(output_path,"results_individual_analysis_sig.csv"))
 
-
-	## Manhattan plot
+	## manhattan plot
 	if(manhattan_plot)
 	{
 		png(paste0(output_path,"manhattan_MAC_20.png"), width = 9, height = 6, units = 'in', res = 600)
@@ -137,6 +136,4 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 		write.csv(results_sig_cond,paste0(output_path,"results_sig_cond.csv"))
 	}
 }
-
-
 

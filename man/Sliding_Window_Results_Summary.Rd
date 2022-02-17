@@ -62,7 +62,7 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{Use_annotation_weights}{use annotations as weights or not (default = FALSE).}
 
-\item{Annotation_name}{a vector of names of annotation scores used in variant-set test (default = NULL).}
+\item{Annotation_name}{a vector of annotation names used in STAAR (default = NULL).}
 
 \item{alpha}{threshod to control the genome-wise (family-wise) error rate (default = 0.05), the p-value threshold is alpha/total number of sliding windows}
 

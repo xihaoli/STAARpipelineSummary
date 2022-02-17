@@ -1,7 +1,7 @@
 info_upstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_cutoff=0.01,
                           method_cond=c("optimal","naive"),
                           QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
-                          Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
+                          Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
@@ -253,3 +253,4 @@ info_upstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_m
 	seqResetFilter(genofile)
 	return(Info_Basic_Anno)
 }
+

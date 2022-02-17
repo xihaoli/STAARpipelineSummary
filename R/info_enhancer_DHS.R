@@ -1,7 +1,7 @@
 info_enhancer_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_cutoff=0.01,
                               method_cond=c("optimal","naive"),
                               QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
-                              Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name=NULL){
+                              Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
@@ -13,7 +13,7 @@ info_enhancer_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,ra
 	## Enhancer
 	varid <- seqGetData(genofile, "variant.id")
 
-	#Now extract the GeneHancer with rOCRs Signal Overlay
+	# Now extract the GeneHancer with rOCRs Signal Overlay
 	genehancerAnno <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GeneHancer")]))
 	genehancer <- genehancerAnno!=""
 
@@ -22,8 +22,8 @@ info_enhancer_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,ra
 	rOCRsGeneHancervt <- rOCRsAnno!=""&genehancerAnno!=""
 	rOCRsGeneHanceridx <- which(rOCRsGeneHancervt,useNames=TRUE)
 	seqSetFilter(genofile,variant.id=varid[rOCRsGeneHanceridx])
-	# variants that covered by whole GeneHancer without rOCRs overlap.
 
+	# Variants that covered by whole GeneHancer without rOCRs overlap
 	genehancerSet <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GeneHancer")]))
 	enhancerGene <- unlist(lapply(strsplit(genehancerSet,"="),`[[`,4))
 	enhancer2GENE <- unlist(lapply(strsplit(enhancerGene,";"),`[[`,1))
@@ -259,3 +259,4 @@ info_enhancer_DHS <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,ra
 	seqResetFilter(genofile)
 	return(Info_Basic_Anno)
 }
+

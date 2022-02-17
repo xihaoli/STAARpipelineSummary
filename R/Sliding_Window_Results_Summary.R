@@ -31,7 +31,7 @@
 #' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Use_annotation_weights use annotations as weights or not (default = FALSE).
-#' @param Annotation_name a vector of names of annotation scores used in variant-set test (default = NULL).
+#' @param Annotation_name a vector of annotation names used in STAAR (default = NULL).
 #' @param alpha threshod to control the genome-wise (family-wise) error rate (default = 0.05), the p-value threshold is alpha/total number of sliding windows
 #' @param manhattan_plot output manhattan plot or not (default = FALSE).
 #' @param QQ_plot output Q-Q plot or not (default = FALSE).
@@ -111,10 +111,10 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 				genofile <- seqOpen(gds.path)
 
 				res_cond <- Sliding_Window_cond(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,
-											start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
-											QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
-											Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
-											Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
+				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
+				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 				results_sig_cond <- rbind(results_sig_cond,res_cond)
 
 				seqClose(genofile)
@@ -137,6 +137,7 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 		dev.off()
 	}
 
+	## Q-Q plot
 	if(QQ_plot)
 	{
 		print("Q-Q plot")
@@ -199,3 +200,4 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 
 	}
 }
+

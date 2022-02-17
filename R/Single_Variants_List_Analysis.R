@@ -87,9 +87,9 @@ Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_null
 			Score_test <- Individual_Score_Test(Geno$Geno, Sigma_i, Sigma_iX, cov, residuals.phenotype)
 
 			single_variants_list_annotation_chr <-data.frame(CHR=CHR,POS=position,REF=REF,ALT=ALT,ALT_AF=ALT_AF,QC_label=filter,MAF=MAF,N=N,
-						pvalue=exp(-Score_test$pvalue_log),pvalue_log10=Score_test$pvalue_log/log(10),
-						Score=Score_test$Score,Score_se=Score_test$Score_se,
-						Est=Score_test$Est,Est_se=Score_test$Est_se)
+			                                                 pvalue=exp(-Score_test$pvalue_log),pvalue_log10=Score_test$pvalue_log/log(10),
+			                                                 Score=Score_test$Score,Score_se=Score_test$Score_se,
+			                                                 Est=Score_test$Est,Est_se=Score_test$Est_se)
 
 			single_variants_list_annotation <- rbind(single_variants_list_annotation,single_variants_list_annotation_chr)
 			seqClose(genofile)
@@ -100,6 +100,4 @@ Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_null
 
 	return(single_variants_list_info_annotation)
 }
-
-
 

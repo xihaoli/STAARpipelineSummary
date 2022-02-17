@@ -1,4 +1,4 @@
-#' Functionally annotate a list of variants.
+#' Functionally annotate a list of variants
 #'
 #' The \code{Annotate_Single_Variants} function takes in a list of variants to functionally annotate the input variants
 #' @param agds_dir file directory of annotated GDS (aGDS) files for all chromosomes (1-22).
@@ -7,14 +7,14 @@
 #' @param QC_label channel name of the QC label in the GDS/aGDS file  (default = "annotation/filter").
 #' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the annotation names and the corresponding channel names in the aGDS file.
-#' @param Annotation_name a vector of annotation names used in STAAR (default = NULL).
+#' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
 #' and annotation scores for the input variants.
 #' @export
 
 Annotate_Single_Variants <- function(agds_dir,single_variants_list,
                                      QC_label="annotation/filter",Annotation_dir="annotation/info/FunctionalAnnotation",
-                                     Annotation_name_catalog,Annotation_name=NULL){
+                                     Annotation_name_catalog,Annotation_name){
 
 	single_variants_list_info <- single_variants_list[,c("CHR","POS","REF","ALT")]
 
@@ -75,6 +75,4 @@ Annotate_Single_Variants <- function(agds_dir,single_variants_list,
 
 	return(single_variants_list_info_annotation)
 }
-
-
 
