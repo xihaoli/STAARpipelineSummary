@@ -21,7 +21,7 @@ the following names: "CHR" (chromosome number), "POS" (position), "REF" (referen
 
 \item{QC_label}{channel name of the QC label in the GDS/aGDS file  (default = "annotation/filter").}
 
-\item{Annotation_dir}{channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").}
+\item{Annotation_dir}{channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").}
 
 \item{Annotation_name_catalog}{a data frame containing the annotation names and the corresponding channel names in the aGDS file.}
 

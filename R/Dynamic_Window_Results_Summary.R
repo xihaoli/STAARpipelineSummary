@@ -24,7 +24,7 @@
 #' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
 #' @param variant_type type of variant included in the conditional analysis. Choice includes "SNV", "Indel", or "variant"  (default = "SNV").
 #' @param QC_label channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").
-#' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
+#' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Use_annotation_weights use annotations as weights or not (default = FALSE).
 #' @param Annotation_name a vector of annotation names used in SCANG-STAAR (default = NULL).
@@ -243,7 +243,7 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 		################### SCANG-S
 		SCANG_S_res <- SCANG_res$SCANG_S_sig
 
-		if(class(SCANG_S_res)!="matrix")
+		if(class(SCANG_S_res)[1]!="matrix")
 		{
 			SCANG_S_res <- matrix(SCANG_S_res,nrow=1)
 		}
@@ -304,7 +304,7 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 		######################## SCANG-O
 		SCANG_O_res <- SCANG_res$SCANG_O_sig
 
-		if(class(SCANG_O_res)!="matrix")
+		if(class(SCANG_O_res)[1]!="matrix")
 		{
 			SCANG_O_res <- matrix(SCANG_O_res,nrow=1)
 		}
@@ -364,7 +364,7 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 		######################## SCANG-B
 		SCANG_B_res <- SCANG_res$SCANG_B_sig
 
-		if(class(SCANG_B_res)!="matrix")
+		if(class(SCANG_B_res)[1]!="matrix")
 		{
 			SCANG_B_res <- matrix(SCANG_B_res,nrow=1)
 		}

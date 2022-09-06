@@ -55,7 +55,7 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{variant_type}{type of variant included in the conditional analysis. Choice includes "SNV", "Indel", or "variant"  (default = "SNV").}
 
-\item{Annotation_dir}{channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").}
+\item{Annotation_dir}{channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").}
 
 \item{Annotation_name_catalog}{a data frame containing the name and the corresponding channel name in the aGDS file.}
 

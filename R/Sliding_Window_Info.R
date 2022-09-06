@@ -20,7 +20,7 @@
 #' @param QC_label channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").
 #' @param variant_type variants include in the conditional analysis. Choices include "variant", "SNV", or "Indel" (default = "SNV").
 #' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
-#' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
+#' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
@@ -202,7 +202,7 @@ Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,kno
 			}
 		}
 
-		if(class(Geno_adjusted)=="numeric")
+		if(class(Geno_adjusted)[1]=="numeric")
 		{
 			Geno_adjusted <- matrix(Geno_adjusted,ncol=1)
 		}
@@ -211,7 +211,7 @@ Sliding_Window_Info <- function(chr,genofile,obj_nullmodel,start_loc,end_loc,kno
 		MAF <- AF*(AF<0.5) + (1-AF)*(AF>=0.5)
 
 		Geno_adjusted <- Geno_adjusted[,MAF>0]
-		if(class(Geno_adjusted)=="numeric")
+		if(class(Geno_adjusted)[1]=="numeric")
 		{
 			Geno_adjusted <- matrix(Geno_adjusted,ncol=1)
 		}

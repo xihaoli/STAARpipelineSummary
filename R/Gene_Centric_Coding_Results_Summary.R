@@ -29,7 +29,7 @@
 #' \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 #' and taking the residuals (default = \code{optimal}).
 #' @param QC_label channel name of the QC label in the GDS/aGDS file  (default = "annotation/filter").
-#' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
+#' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Use_annotation_weights use annotations as weights or not (default = FALSE).
 #' @param Annotation_name a vector of annotation names used in STAAR (default = NULL).
@@ -180,7 +180,7 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		plof_sig_cond <- c()
 		if(length(plof_sig)!=0)
 		{
-			if((class(plof_sig)!="matrix")&(class(plof_sig)!="data.frame"))
+			if((class(plof_sig)[1]!="matrix")&(class(plof_sig)[1]!="data.frame"))
 			{
 				plof_sig <- matrix(plof_sig,nrow=1)
 			}
@@ -212,7 +212,7 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		missense_sig_cond <- c()
 		if(length(missense_sig)!=0)
 		{
-			if((class(missense_sig)!="matrix")&(class(missense_sig)!="data.frame"))
+			if((class(missense_sig)[1]!="matrix")&(class(missense_sig)[1]!="data.frame"))
 			{
 				missense_sig <- matrix(missense_sig,nrow=1)
 			}
@@ -243,7 +243,7 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		synonymous_sig_cond <- c()
 		if(length(synonymous_sig)!=0)
 		{
-			if((class(synonymous_sig)!="matrix")&(class(synonymous_sig)!="data.frame"))
+			if((class(synonymous_sig)[1]!="matrix")&(class(synonymous_sig)[1]!="data.frame"))
 			{
 				synonymous_sig <- matrix(synonymous_sig,nrow=1)
 			}
@@ -274,7 +274,7 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		plof_ds_sig_cond <- c()
 		if(length(plof_ds_sig)!=0)
 		{
-			if((class(plof_ds_sig)!="matrix")&(class(plof_ds_sig)!="data.frame"))
+			if((class(plof_ds_sig)[1]!="matrix")&(class(plof_ds_sig)[1]!="data.frame"))
 			{
 				plof_ds_sig <- matrix(plof_ds_sig,nrow=1)
 			}
@@ -305,7 +305,7 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		disruptive_missense_sig_cond <- c()
 		if(length(disruptive_missense_sig)!=0)
 		{
-			if((class(disruptive_missense_sig)!="matrix")&(class(disruptive_missense_sig)!="data.frame"))
+			if((class(disruptive_missense_sig)[1]!="matrix")&(class(disruptive_missense_sig)[1]!="data.frame"))
 			{
 				disruptive_missense_sig <- matrix(disruptive_missense_sig,nrow=1)
 			}

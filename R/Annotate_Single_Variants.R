@@ -5,7 +5,7 @@
 #' @param single_variants_list a data frame containing the information of variants to be functionally annotated. The data frame must include 4 columns with
 #' the following names: "CHR" (chromosome number), "POS" (position), "REF" (reference allele), and "ALT" (alternative allele).
 #' @param QC_label channel name of the QC label in the GDS/aGDS file  (default = "annotation/filter").
-#' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
+#' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the annotation names and the corresponding channel names in the aGDS file.
 #' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele)

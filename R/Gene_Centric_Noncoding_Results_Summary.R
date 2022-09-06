@@ -32,7 +32,7 @@
 #' \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 #' and taking the residuals (default = \code{optimal}).
 #' @param QC_label channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").
-#' @param Annotation_dir channel name of the annotations in the aGDS file (default = "annotation/info/FunctionalAnnotation").
+#' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Use_annotation_weights use annotations as weights or not (default = FALSE).
 #' @param Annotation_name a vector of annotation names used in STAAR (default = NULL).
@@ -250,7 +250,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		if(length(UTR_sig)!=0)
 		{
 
-			if((class(UTR_sig)!="matrix")&(class(UTR_sig)!="data.frame"))
+			if((class(UTR_sig)[1]!="matrix")&(class(UTR_sig)[1]!="data.frame"))
 			{
 				UTR_sig <- matrix(UTR_sig,nrow=1)
 			}
@@ -285,7 +285,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		if(length(upstream_sig)!=0)
 		{
 
-			if((class(upstream_sig)!="matrix")&(class(upstream_sig)!="data.frame"))
+			if((class(upstream_sig)[1]!="matrix")&(class(upstream_sig)[1]!="data.frame"))
 			{
 				upstream_sig <- matrix(upstream_sig,nrow=1)
 			}
@@ -317,7 +317,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		downstream_sig_cond <- c()
 		if(length(downstream_sig)!=0)
 		{
-			if((class(downstream_sig)!="matrix")&(class(downstream_sig)!="data.frame"))
+			if((class(downstream_sig)[1]!="matrix")&(class(downstream_sig)[1]!="data.frame"))
 			{
 				downstream_sig <- matrix(downstream_sig,nrow=1)
 			}
@@ -349,7 +349,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		promoter_CAGE_sig_cond <- c()
 		if(length(promoter_CAGE_sig)!=0)
 		{
-			if((class(promoter_CAGE_sig)!="matrix")&(class(promoter_CAGE_sig)!="data.frame"))
+			if((class(promoter_CAGE_sig)[1]!="matrix")&(class(promoter_CAGE_sig)[1]!="data.frame"))
 			{
 				promoter_CAGE_sig <- matrix(promoter_CAGE_sig,nrow=1)
 			}
@@ -381,7 +381,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		promoter_DHS_sig_cond <- c()
 		if(length(promoter_DHS_sig)!=0)
 		{
-			if((class(promoter_DHS_sig)!="matrix")&(class(promoter_DHS_sig)!="data.frame"))
+			if((class(promoter_DHS_sig)[1]!="matrix")&(class(promoter_DHS_sig)[1]!="data.frame"))
 			{
 				promoter_DHS_sig <- matrix(promoter_DHS_sig,nrow=1)
 			}
@@ -413,7 +413,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		enhancer_CAGE_sig_cond <- c()
 		if(length(enhancer_CAGE_sig)!=0)
 		{
-			if((class(enhancer_CAGE_sig)!="matrix")&(class(enhancer_CAGE_sig)!="data.frame"))
+			if((class(enhancer_CAGE_sig)[1]!="matrix")&(class(enhancer_CAGE_sig)[1]!="data.frame"))
 			{
 				enhancer_CAGE_sig <- matrix(enhancer_CAGE_sig,nrow=1)
 			}
@@ -445,7 +445,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		enhancer_DHS_sig_cond <- c()
 		if(length(enhancer_DHS_sig)!=0)
 		{
-			if((class(enhancer_DHS_sig)!="matrix")&(class(enhancer_DHS_sig)!="data.frame"))
+			if((class(enhancer_DHS_sig)[1]!="matrix")&(class(enhancer_DHS_sig)[1]!="data.frame"))
 			{
 				enhancer_DHS_sig <- matrix(enhancer_DHS_sig,nrow=1)
 			}
@@ -478,7 +478,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		ncRNA_sig_cond <- c()
 		if(length(ncRNA_sig)!=0)
 		{
-			if((class(ncRNA_sig)!="matrix")&(class(ncRNA_sig)!="data.frame"))
+			if((class(ncRNA_sig)[1]!="matrix")&(class(ncRNA_sig)[1]!="data.frame"))
 			{
 				ncRNA_sig <- matrix(ncRNA_sig,nrow=1)
 			}

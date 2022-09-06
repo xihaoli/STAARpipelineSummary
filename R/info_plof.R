@@ -188,7 +188,7 @@ info_plof <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_c
 			}
 		}
 
-		if(class(Geno_adjusted)=="numeric")
+		if(class(Geno_adjusted)[1]=="numeric")
 		{
 			Geno_adjusted <- matrix(Geno_adjusted,ncol=1)
 		}
@@ -197,7 +197,7 @@ info_plof <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_c
 		MAF <- AF*(AF<0.5) + (1-AF)*(AF>=0.5)
 
 		Geno_adjusted <- Geno_adjusted[,MAF>0]
-		if(class(Geno_adjusted)=="numeric")
+		if(class(Geno_adjusted)[1]=="numeric")
 		{
 			Geno_adjusted <- matrix(Geno_adjusted,ncol=1)
 		}
