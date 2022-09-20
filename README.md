@@ -28,7 +28,7 @@ docker pull zilinli/staarpipeline:0.9.6
 ## Usage
 Please see the <a href="docs/STAARpipelineSummary_manual.pdf">**STAARpipelineSummary** user manual</a> for detailed usage of STAARpipelineSummary package. Please see the <a href="https://github.com/xihaoli/STAARpipeline-Tutorial">**STAARpipeline** tutorial</a> for a detailed example of summarizing and visualizing association analysis results using STAARpipelineSummary.
 ## Data Availability
-The whole-genome individual functional annotation data assembled from a variety of sources and the computed annotation principal components are available at the [Functional Annotation of Variant - Online Resource (FAVOR)](https://favor.genohub.org) site.
+The whole-genome individual functional annotation data assembled from a variety of sources and the computed annotation principal components are available at the [Functional Annotation of Variant - Online Resource (FAVOR)](https://favor.genohub.org) site and [FAVOR Essential Database](https://doi.org/10.7910/DVN/1VGTJI).
 ## Version
 The current version is 0.9.6 (September 20, 2022).
 ## Citation
