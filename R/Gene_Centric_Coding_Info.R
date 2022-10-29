@@ -43,7 +43,7 @@ Gene_Centric_Coding_Info <- function(category=c("plof","plof_ds","missense","dis
 
 	if(is.null(known_loci))
 	{
-		known_loci <- data.frame(chr=logical(0),pos=logical(0),ref=character(0),alt=character(0))
+		known_loci <- data.frame(CHR=logical(0),POS=logical(0),REF=character(0),ALT=character(0))
 	}
 
 	if(category=="plof")

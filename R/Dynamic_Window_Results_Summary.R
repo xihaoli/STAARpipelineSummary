@@ -229,7 +229,7 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	SCANG_O_top1 <- SCANG_res$SCANG_O_top1
 	SCANG_O_top1[1] <- exp(-SCANG_O_top1[1])
 	SCANG_O_top1 <- matrix(SCANG_O_top1,nrow=1)
-	colnames(SCANG_O_top1) <- c("STAAR_O_SCANG","chr","start_pos","end_pos","GWER","SNV_nos")
+	colnames(SCANG_O_top1) <- c("SCANG_STAAR_O","chr","start_pos","end_pos","GWER","SNV_nos")
 
 	save(SCANG_O_top1,file=paste0(output_path,"SCANG_O_top1.Rdata"))
 	write.csv(SCANG_O_top1,paste0(output_path,"SCANG_O_top1.csv"))
@@ -342,17 +342,17 @@ Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 		{
 			## Uncond
 			SCANG_O_res[,1] <- exp(-SCANG_O_res[,1])
-			colnames(SCANG_O_res) <- c("STAAR_O_SCANG","chr","start_pos","end_pos","GWER","SNV_nos")
+			colnames(SCANG_O_res) <- c("SCANG_STAAR_O","chr","start_pos","end_pos","GWER","SNV_nos")
 			SCANG_O_res <- SCANG_O_res[,c(2:4,6,5,1),drop=FALSE]
 
 			## SCANG_O_cond
 			STAAR_O <- SCANG_O_res_cond[,c("STAAR-S(1,25)","STAAR-S(1,1)","STAAR-B(1,25)","STAAR-B(1,1)"),drop=FALSE]
 			STAAR_O <- as.matrix(STAAR_O)
-			STAAR_O_SCANG_cond <- apply(STAAR_O,1,function(z) CCT(as.numeric(z)))
+			SCANG_STAAR_O_cond <- apply(STAAR_O,1,function(z) CCT(as.numeric(z)))
 
 			STAAR_cond <- SCANG_O_res_cond[,c("ACAT-V(1,25)","Burden(1,1)","SKAT(1,25)","STAAR-O"),drop=FALSE]
 
-			SCANG_O_res_uncond_cond <- cbind(SCANG_O_res,STAAR_O_SCANG_cond)
+			SCANG_O_res_uncond_cond <- cbind(SCANG_O_res,SCANG_STAAR_O_cond)
 			SCANG_O_res_uncond_cond <- cbind(SCANG_O_res_uncond_cond,STAAR_cond)
 			colnames(SCANG_O_res_uncond_cond)[(dim(SCANG_O_res_uncond_cond)[2]-3):dim(SCANG_O_res_uncond_cond)[2]] <- c("ACAT_V_cond","Burden_cond","SKAT_cond","STAAR_O_cond")
 		}
