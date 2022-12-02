@@ -30,7 +30,11 @@
 #' @return \code{results_individual_analysis_genome.Rdata}: a matrix contains the score test p-value and effect size estimation of each variant across the genome.
 #' @return \code{results_individual_analysis_sig.Rdata} and \code{results_individual_analysis_sig.csv}: a matrix contains the score test p-values and effect size estimations of significant results (p-value < alpha).
 #' @return \code{results_sig_cond.Rdata} and \code{results_sig_cond.csv}: a matrix contains the conditional score test p-values for each significant variant  (available if known_loci is not a NULL).
-#  manhattan plot (option) and Q-Q plot (option) of the individual analysis results.
+#' @return manhattan plot (optional) and Q-Q plot (optional) of the individual analysis results.
+#' @references Li, Z., Li, X., et al. (2022). A framework for detecting
+#' noncoding rare-variant associations of large-scale whole-genome sequencing
+#' studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+#' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
 Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,output_path,individual_results_name,

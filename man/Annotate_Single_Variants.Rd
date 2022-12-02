@@ -34,3 +34,9 @@ and annotation scores for the input variants.
 \description{
 The \code{Annotate_Single_Variants} function takes in a list of variants to functionally annotate the input variants
 }
+\references{
+Li, Z., Li, X., et al. (2022). A framework for detecting
+noncoding rare-variant associations of large-scale whole-genome sequencing
+studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+(\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
+}

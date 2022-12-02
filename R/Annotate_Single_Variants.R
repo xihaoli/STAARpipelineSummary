@@ -10,6 +10,10 @@
 #' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
 #' and annotation scores for the input variants.
+#' @references Li, Z., Li, X., et al. (2022). A framework for detecting
+#' noncoding rare-variant associations of large-scale whole-genome sequencing
+#' studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+#' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
 Annotate_Single_Variants <- function(agds_dir,single_variants_list,

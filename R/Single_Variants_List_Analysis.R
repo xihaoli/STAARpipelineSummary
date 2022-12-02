@@ -10,6 +10,10 @@
 #' @param QC_label channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
 #' the score test p-values, and the effect sizes for the input variants.
+#' @references Li, Z., Li, X., et al. (2022). A framework for detecting
+#' noncoding rare-variant associations of large-scale whole-genome sequencing
+#' studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+#' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
 Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_nullmodel,

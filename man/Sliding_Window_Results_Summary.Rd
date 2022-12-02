@@ -78,10 +78,18 @@ The function returns the following analysis results:
 \code{sliding_window_sig.Rdata} and \code{sliding_window_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the significant sliding windows (unconditional p-value<alpha/total number of sliding windows).
 
 \code{sliding_window_sig_cond.Rdata} and \code{sliding_window_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the significant sliding windows (available if known_loci is not a NULL).
+
+manhattan plot (optional) and Q-Q plot (optional) of the sliding window analysis results.
 }
 \description{
 The \code{Sliding_Window_Results_Summary} function takes in the results of sliding window analysis,
 the object from fitting the null model, and the set of known variants to be adjusted for in conditional analysis
 to summarize the sliding window analysis results and analyze the conditional association between a quantitative/dichotomous phenotype and
 the rare variants in the unconditional significant genetic region.
+}
+\references{
+Li, Z., Li, X., et al. (2022). A framework for detecting
+noncoding rare-variant associations of large-scale whole-genome sequencing
+studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+(\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 }

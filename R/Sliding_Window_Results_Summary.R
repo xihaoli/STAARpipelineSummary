@@ -39,7 +39,11 @@
 #' @return \code{results_sliding_window_genome.Rdata}: a matrix contains the STAAR p-values (including STAAR-O) of the sliding windows across the genome.
 #' @return \code{sliding_window_sig.Rdata} and \code{sliding_window_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the significant sliding windows (unconditional p-value<alpha/total number of sliding windows).
 #' @return \code{sliding_window_sig_cond.Rdata} and \code{sliding_window_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the significant sliding windows (available if known_loci is not a NULL).
-#  manhattan plot (option) and Q-Q plot (option) of the individual analysis results.
+#' @return manhattan plot (optional) and Q-Q plot (optional) of the sliding window analysis results.
+#' @references Li, Z., Li, X., et al. (2022). A framework for detecting
+#' noncoding rare-variant associations of large-scale whole-genome sequencing
+#' studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+#' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
 Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_path,sliding_window_results_name,

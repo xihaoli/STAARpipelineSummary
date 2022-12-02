@@ -122,3 +122,9 @@ the object from fitting the null model, and the set of known variants to be adju
 to summarize the dynamic window analysis results and analyze the conditional association between a quantitative/dichotomous phenotype and
 the rare variants in the unconditional significant genetic regions.
 }
+\references{
+Li, Z., Li, X., et al. (2022). A framework for detecting
+noncoding rare-variant associations of large-scale whole-genome sequencing
+studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+(\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
+}

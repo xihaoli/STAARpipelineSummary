@@ -70,7 +70,11 @@
 #' @return \code{results_ncRNA_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by exonic and splicing ncRNA variants (ncRNA) for all ncRNA genes across the genome.
 #' @return \code{ncRNA_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant ncRNA masks.
 #' @return \code{ncRNA_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant ncRNA masks (available if known_loci is not a NULL).
-#  manhattan plot (option) and Q-Q plot (option) of the individual analysis results.
+#' @return manhattan plot (optional) and Q-Q plot (optional) of the gene-centric noncoding analysis results.
+#' @references Li, Z., Li, X., et al. (2022). A framework for detecting
+#' noncoding rare-variant associations of large-scale whole-genome sequencing
+#' studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+#' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
 Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncoding_jobs_num,input_path,output_path,gene_centric_results_name,

@@ -67,3 +67,9 @@ and annotation scores for the rare variants of the input coding mask.
 \description{
 The \code{Gene_Centric_Coding_Info} function takes in a coding mask of a gene to functionally annotate the rare variants in the mask.
 }
+\references{
+Li, Z., Li, X., et al. (2022). A framework for detecting
+noncoding rare-variant associations of large-scale whole-genome sequencing
+studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+(\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
+}

@@ -27,6 +27,10 @@
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
 #' unconditional and conditional the score test p-values,
 #' and annotation scores for the rare variants of the input coding mask.
+#' @references Li, Z., Li, X., et al. (2022). A framework for detecting
+#' noncoding rare-variant associations of large-scale whole-genome sequencing
+#' studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+#' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
 Gene_Centric_Coding_Info <- function(category=c("plof","plof_ds","missense","disruptive_missense","synonymous"),

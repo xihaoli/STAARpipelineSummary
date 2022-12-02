@@ -65,6 +65,10 @@
 #' Details see SCANG-STAAR-S.
 #' @return \code{SCANG_O_res_cond.Rdata} and \code{SCANG_O_res_cond.csv}: A matrix that summarized the conditional p-values of the significant regions (GWER<alpha) detected by SCANG-STAAR-O (available if known_loci is not a NULL),
 #' Details see SCANG-STAAR-S.
+#' @references Li, Z., Li, X., et al. (2022). A framework for detecting
+#' noncoding rare-variant associations of large-scale whole-genome sequencing
+#' studies. \emph{Nature Methods}, \emph{19}(12), 1599-1611.
+#' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
 Dynamic_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_path,dynamic_window_results_name,
