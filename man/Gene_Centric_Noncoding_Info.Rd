@@ -62,7 +62,7 @@ and taking the residuals (default = \code{optimal}).}
 }
 \value{
 a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
-unconditional and conditional the score test p-values,
+unconditional and conditional the score test p-values (not provided for imbalanced case-control setting),
 and annotation scores  for the rare variants of the input noncoding mask.
 }
 \description{

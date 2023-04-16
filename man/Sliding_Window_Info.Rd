@@ -59,7 +59,7 @@ and taking the residuals (default = \code{optimal}).}
 \item{Annotation_name}{a vector of qualitative/quantitative annotation names user wants to extract.}
 }
 \value{
-a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
+A data frame containing the basic information (chromosome, position, reference allele and alternative allele),
 unconditional and conditional the score test p-values,
 and annotation scores for the input variants.
 }

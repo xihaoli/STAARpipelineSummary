@@ -2,7 +2,8 @@ manhattan_plot<-function(chr, pos, pvalue,
                          sig.level=NA, annotate=NULL, ann.default=list(),
                          should.thin=T, thin.pos.places=2, thin.logp.places=2,
                          xlab="Chromosome", ylab=expression(-log[10](p-value)),
-                         col=c("gray","darkgray"), panel.extra=NULL, pch=20, cex=0.8,...) {
+                         col=c("gray","darkgray"), panel.extra=NULL, pch=20, 
+						 use_logp=FALSE,cex=0.8,...) {
 
 	if (length(chr)==0) stop("chromosome vector is empty")
 	if (length(pos)==0) stop("position vector is empty")
@@ -103,19 +104,36 @@ manhattan_plot<-function(chr, pos, pvalue,
 
 	#reduce number of points plotted
 	if(should.thin) {
-		thinned <- unique(data.frame(
-			logp=round(-log10(pvalue),thin.logp.places),
-			pos=round(genpos,thin.pos.places),
-			chr=chr,
-			grp=grp)
-		)
+		if(!use_logp)
+		{
+			thinned <- unique(data.frame(
+				logp=round(-log10(pvalue),thin.logp.places),
+				pos=round(genpos,thin.pos.places),
+				chr=chr,
+				grp=grp)
+			)
+		}else
+		{
+			thinned <- unique(data.frame(
+				logp=round(pvalue,thin.logp.places),
+				pos=round(genpos,thin.pos.places),
+				chr=chr,
+				grp=grp)
+			)
+		}
 		logp <- thinned$logp
 		genpos <- thinned$pos
 		chr <- thinned$chr
 		grp <- thinned$grp
 		rm(thinned)
 	} else {
-		logp <- -log10(pvalue)
+		if(!use_logp)
+		{
+			logp <- -log10(pvalue)
+		}else
+		{
+			logp <- pvalue
+		}
 	}
 	rm(pos, pvalue)
 	gc()

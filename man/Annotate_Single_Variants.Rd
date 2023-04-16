@@ -28,7 +28,7 @@ the following names: "CHR" (chromosome number), "POS" (position), "REF" (referen
 \item{Annotation_name}{a vector of qualitative/quantitative annotation names user wants to extract.}
 }
 \value{
-a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
+A data frame containing the basic information (chromosome, position, reference allele and alternative allele)
 and annotation scores for the input variants.
 }
 \description{

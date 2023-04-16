@@ -9,7 +9,10 @@ Single_Variants_List_Analysis(
   single_variants_list,
   obj_nullmodel,
   QC_label = "annotation/filter",
-  geno_missing_imputation = c("mean", "minor")
+  geno_missing_imputation = c("mean", "minor"),
+  p_filter_cutoff = 0.05,
+  tol = .Machine$double.eps^0.25,
+  max_iter = 1000
 )
 }
 \arguments{
@@ -24,6 +27,13 @@ or the output from \code{fitNullModel} function in the \code{GENESIS} package an
 \item{QC_label}{channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").}
 
 \item{geno_missing_imputation}{method of handling missing genotypes. Either "mean" or "minor" (default = "mean").}
+
+\item{p_filter_cutoff}{threshold for the p-value recalculation using the SPA method (default = 0.05)}
+
+\item{tol}{a positive number specifying tolerance, the difference threshold for parameter
+estimates in saddlepoint apporximation algorithm below which iterations should be stopped (default = ".Machine$double.eps^0.25").}
+
+\item{max_iter}{a positive integers pecifying the maximum number of iterations for applying the saddlepoint approximation algorithm (default = "1000").}
 }
 \value{
 a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
@@ -31,6 +41,8 @@ the score test p-values, and the effect sizes for the input variants.
 }
 \description{
 The \code{Single_Variants_List_Analysis} function takes in a list of variants to calculate the p-values and effect sizes of the input variants
+(effect size estimations are not provided for imbalanced case-control setting), 
+only support for null model fitting using sparse GRM.
 }
 \references{
 Li, Z., Li, X., et al. (2022). A framework for detecting

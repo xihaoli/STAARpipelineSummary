@@ -17,7 +17,11 @@ Individual_Analysis_Results_Summary(
   geno_missing_imputation = c("mean", "minor"),
   alpha = 5e-09,
   manhattan_plot = FALSE,
-  QQ_plot = FALSE
+  QQ_plot = FALSE,
+  SPA_p_filter = FALSE,
+  p_filter_cutoff = 0.05,
+  cond_null_model_name = NULL,
+  cond_null_model_dir = NULL
 )
 }
 \arguments{
@@ -49,11 +53,19 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{geno_missing_imputation}{method of handling missing genotypes. Either "mean" or "minor" (default = "mean").}
 
-\item{alpha}{p-value threshold of significant results (default=5E-09).}
+\item{alpha}{p-value threshold of significant results (default = 5E-09).}
 
 \item{manhattan_plot}{output manhattan plot or not (default = FALSE).}
 
 \item{QQ_plot}{output Q-Q plot or not (default = FALSE).}
+
+\item{SPA_p_filter}{logical: are only the variants with a score-test-based p-value smaller than a pre-specified threshold use the SPA method to recalculate the p-value, only used for imbalanced case-control setting (default = FALSE).}
+
+\item{p_filter_cutoff}{threshold for the p-value recalculation using the SPA method, only used for imbalanced case-control setting (default = 0.05)}
+
+\item{cond_null_model_name}{the null model name for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).}
+
+\item{cond_null_model_dir}{the directory of storing the null model for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).}
 }
 \value{
 The function returns the following analysis results:

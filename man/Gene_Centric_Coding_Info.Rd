@@ -5,7 +5,8 @@
 \title{Functionally annotate rare variants in a coding mask}
 \usage{
 Gene_Centric_Coding_Info(
-  category = c("plof", "plof_ds", "missense", "disruptive_missense", "synonymous"),
+  category = c("plof", "plof_ds", "missense", "disruptive_missense", "synonymous", "ptv",
+    "ptv_ds"),
   chr,
   genofile,
   obj_nullmodel,
@@ -23,7 +24,7 @@ Gene_Centric_Coding_Info(
 }
 \arguments{
 \item{category}{the coding functional category of rare variants to be functionally annotated. Choices include
-\code{plof}, \code{plof_ds}, \code{missense}, \code{disruptive_missense}, \code{synonymous} (default = \code{plof}).}
+\code{plof}, \code{plof_ds}, \code{missense}, \code{disruptive_missense}, \code{synonymous}, \code{ptv}, \code{ptv_ds} (default = \code{plof}).}
 
 \item{chr}{chromosome.}
 
@@ -60,8 +61,8 @@ and taking the residuals (default = \code{optimal}).}
 \item{Annotation_name}{a vector of qualitative/quantitative annotation names user wants to extract.}
 }
 \value{
-a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
-unconditional and conditional the score test p-values,
+A data frame containing the basic information (chromosome, position, reference allele and alternative allele),
+unconditional and conditional the score test p-values (not provided for imbalanced case-control setting),
 and annotation scores for the rare variants of the input coding mask.
 }
 \description{

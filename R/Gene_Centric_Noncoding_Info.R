@@ -25,7 +25,7 @@
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
-#' unconditional and conditional the score test p-values,
+#' unconditional and conditional the score test p-values (not provided for imbalanced case-control setting),
 #' and annotation scores  for the rare variants of the input noncoding mask.
 #' @references Li, Z., Li, X., et al. (2022). A framework for detecting
 #' noncoding rare-variant associations of large-scale whole-genome sequencing

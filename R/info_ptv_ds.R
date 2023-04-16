@@ -1,7 +1,7 @@
-info_downstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_cutoff=0.01,
-                            method_cond=c("optimal","naive"),
-                            QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
-                            Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name){
+info_ptv_ds <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare_maf_cutoff=0.01,
+                      method_cond=c("optimal","naive"),
+                      QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
+                      Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,Annotation_name){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
@@ -37,50 +37,53 @@ info_downstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
 		SNVlist <- (filter == "PASS") & (!isSNV(genofile))
 	}
 
-
+	position <- as.numeric(seqGetData(genofile, "position"))
 	variant.id <- seqGetData(genofile, "variant.id")
 
 	rm(filter)
 	gc()
 
-	## downstream SNVs
-	GENCODE.Category <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GENCODE.Category")]))
-	is.in <- (GENCODE.Category=="downstream")&(SNVlist)
-	variant.id.downstream <- variant.id[is.in]
-
-	rm(GENCODE.Category)
-	gc()
-
-	seqSetFilter(genofile,variant.id=variant.id.downstream,sample.id=phenotype.id)
-
-	rm(variant.id.downstream)
-	gc()
-
-	GENCODE.Info <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GENCODE.Info")]))
-	GENCODE.Info.split <- strsplit(GENCODE.Info, split = "[,]")
-	variant_gene_num <- sapply(GENCODE.Info.split,function(z) length(z))
-
-	variant.id.SNV <- seqGetData(genofile, "variant.id")
-	variant.id.SNV <- rep(variant.id.SNV,variant_gene_num)
-
-	rm(GENCODE.Info)
-	gc()
-
-	rm(variant_gene_num)
-	gc()
-
-	Gene <- as.character(unlist(GENCODE.Info.split))
-
-	rm(GENCODE.Info.split)
-	gc()
-
-	seqResetFilter(genofile)
-
 	### Gene
-	is.in <- which(Gene==gene_name)
-	variant.is.in <- variant.id.SNV[is.in]
+	kk <- which(genes[,1]==gene_name)
 
-	seqSetFilter(genofile,variant.id=variant.is.in,sample.id=phenotype.id)
+	sub_start_loc <- genes[kk,3]
+	sub_end_loc <- genes[kk,4]
+
+	is.in <- (SNVlist)&(position>=sub_start_loc)&(position<=sub_end_loc)
+	variant.id.gene <- variant.id[is.in]
+
+	seqSetFilter(genofile,variant.id=variant.id.gene,sample.id=phenotype.id)
+
+	## ptv_ds
+	## Gencode_Exonic
+	GENCODE.EXONIC.Category <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GENCODE.EXONIC.Category")]))
+	## Gencode
+	GENCODE.Category <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GENCODE.Category")]))
+	## Meta.SVM.Pred
+	MetaSVM_pred <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="MetaSVM")]))
+
+	variant.id.gene <- seqGetData(genofile, "variant.id")
+	
+	if(variant_type=="SNV")
+	{
+		lof.in.plof <- (GENCODE.EXONIC.Category=="stopgain")|(GENCODE.EXONIC.Category=="stoploss")|(GENCODE.Category=="splicing")|(GENCODE.Category=="exonic;splicing")|((GENCODE.EXONIC.Category=="nonsynonymous SNV")&(MetaSVM_pred=="D"))
+	}
+	
+	if(variant_type=="Indel")
+	{
+		lof.in.plof <- (GENCODE.EXONIC.Category=="frameshift deletion")|(GENCODE.EXONIC.Category=="frameshift insertion")|((GENCODE.EXONIC.Category=="nonsynonymous SNV")&(MetaSVM_pred=="D"))
+	}
+	
+	if(variant_type=="variant")
+	{
+		lof.in.plof.snv <- (GENCODE.EXONIC.Category=="stopgain")|(GENCODE.EXONIC.Category=="stoploss")|(GENCODE.Category=="splicing")|(GENCODE.Category=="exonic;splicing")
+		lof.in.plof.indel <- (GENCODE.EXONIC.Category=="frameshift deletion")|(GENCODE.EXONIC.Category=="frameshift insertion")
+		lof.in.plof <- lof.in.plof.snv|lof.in.plof.indel|((GENCODE.EXONIC.Category=="nonsynonymous SNV")&(MetaSVM_pred=="D"))
+	}
+	
+	variant.id.gene <- variant.id.gene[lof.in.plof]
+
+	seqSetFilter(genofile,variant.id=variant.id.gene,sample.id=phenotype.id)
 
 	## genotype id
 	id.genotype <- seqGetData(genofile,"sample.id")
@@ -128,7 +131,6 @@ info_downstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
 			Individual_p <- Indiv_Uncond$pvalue[!is.na(Indiv_Uncond$pvalue)]
 		}
 	}
-
 
 	## MAF
 	AF <- colMeans(Geno)/2
@@ -183,7 +185,6 @@ info_downstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
 		
 		Anno.Int.PHRED <- Anno.Int.PHRED.sub[MAF>0,]
 	}
-
 
 	seqResetFilter(genofile)
 
@@ -292,7 +293,6 @@ info_downstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
 	}
 	
 	Gene <- rep(gene_name,dim(Info_Basic)[1])
-	
 	if(!use_SPA)
 	{
 		if(n_pheno==1)
@@ -320,7 +320,7 @@ info_downstream <- function(chr,genofile,obj_nullmodel,gene_name,known_loci,rare
 	{
 		Info_Basic <- cbind(Gene,Info_Basic)
 	}
-	
+
 	Info_Basic_Anno <- cbind(Info_Basic,Anno.Int.PHRED)
 
 	seqResetFilter(genofile)

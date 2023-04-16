@@ -23,9 +23,13 @@
 #' and taking the residuals (default = \code{optimal}).
 #' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
 #' @param QC_label channel name of the QC label in the GDS/aGDS file.
-#' @param alpha p-value threshold of significant results (default=5E-09).
+#' @param alpha p-value threshold of significant results (default = 5E-09).
 #' @param manhattan_plot output manhattan plot or not (default = FALSE).
 #' @param QQ_plot output Q-Q plot or not (default = FALSE).
+#' @param SPA_p_filter logical: are only the variants with a score-test-based p-value smaller than a pre-specified threshold use the SPA method to recalculate the p-value, only used for imbalanced case-control setting (default = FALSE).
+#' @param p_filter_cutoff threshold for the p-value recalculation using the SPA method, only used for imbalanced case-control setting (default = 0.05)
+#' @param cond_null_model_name the null model name for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).
+#' @param cond_null_model_dir the directory of storing the null model for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).
 #' @return The function returns the following analysis results:
 #' @return \code{results_individual_analysis_genome.Rdata}: a matrix contains the score test p-value and effect size estimation of each variant across the genome.
 #' @return \code{results_individual_analysis_sig.Rdata} and \code{results_individual_analysis_sig.csv}: a matrix contains the score test p-values and effect size estimations of significant results (p-value < alpha).
@@ -41,11 +45,22 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
                                                 obj_nullmodel,known_loci=NULL,
                                                 method_cond=c("optimal","naive"),
                                                 QC_label="annotation/filter",geno_missing_imputation=c("mean","minor"),
-                                                alpha=5E-09,manhattan_plot=FALSE,QQ_plot=FALSE){
+                                                alpha=5E-09,manhattan_plot=FALSE,QQ_plot=FALSE,
+                                                SPA_p_filter=FALSE,p_filter_cutoff=0.05,
+                                                cond_null_model_name=NULL,cond_null_model_dir=NULL){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
 	geno_missing_imputation <- match.arg(geno_missing_imputation)
+
+	## set SPA
+	if(!is.null(obj_nullmodel$use_SPA))
+	{
+		use_SPA <- obj_nullmodel$use_SPA
+	}else
+	{
+		use_SPA <- FALSE
+	}
 
 	## Summarize Individual Analysis Results
 	results_individual_analysis_genome <- c()
@@ -87,23 +102,60 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 	{
 		png(paste0(output_path,"manhattan_MAC_20.png"), width = 9, height = 6, units = 'in', res = 600)
 
-		print(manhattan_plot(results_individual_analysis_genome$CHR, results_individual_analysis_genome$POS, results_individual_analysis_genome$pvalue, col = c("blue4", "orange3"),sig.level=alpha))
+		pvalue <- results_individual_analysis_genome$pvalue
+
+		if(min(pvalue)==0)
+		{
+			if(!use_SPA)
+			{
+				print(manhattan_plot(results_individual_analysis_genome$CHR, results_individual_analysis_genome$POS, results_individual_analysis_genome$pvalue_log10, use_logp=TRUE, col = c("blue4", "orange3"),sig.level=alpha))
+			}else
+			{
+				pvalue_log10 <- -log10(pvalue)
+				pvalue_log10[!is.finite(pvalue_log10)] <- 308
+
+				print(manhattan_plot(results_individual_analysis_genome$CHR, results_individual_analysis_genome$POS, pvalue_log10, use_logp=TRUE, col = c("blue4", "orange3"),sig.level=alpha))
+
+				rm(pvalue_log10)
+			}
+
+		}else
+		{
+			print(manhattan_plot(results_individual_analysis_genome$CHR, results_individual_analysis_genome$POS, results_individual_analysis_genome$pvalue, col = c("blue4", "orange3"),sig.level=alpha))
+		}
+
+		rm(pvalue)
+		gc()
 
 		dev.off()
 	}
 
 	## Q-Q plot
-	observed <- sort(results_individual_analysis_genome$pvalue)
-	lobs <- -(log10(observed))
-
-	expected <- c(1:length(observed))
-	lexp <- -(log10(expected / (length(expected)+1)))
-
-	rm(results_individual_analysis_genome)
-	gc()
-
 	if(QQ_plot)
 	{
+		observed <- sort(results_individual_analysis_genome$pvalue)
+
+		if(min(observed)==0)
+		{
+			if(!use_SPA)
+			{
+				lobs <- sort(results_individual_analysis_genome$pvalue_log10,decreasing = TRUE)
+			}else
+			{
+				lobs <- -(log10(observed))
+				lobs[!is.finite(lobs)] <- 308
+			}
+		}else
+		{
+			lobs <- -(log10(observed))
+		}
+
+		expected <- c(1:length(observed))
+		lexp <- -(log10(expected / (length(expected)+1)))
+
+		rm(results_individual_analysis_genome)
+		gc()
+
 		png(paste0(output_path,"qqplot_MAC_20.png"), width = 9, height = 9, units = 'in', res = 600)
 
 		par(mar=c(5,6,4,4))
@@ -119,25 +171,70 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 	## Conditional Analysis
 	if(length(known_loci)!=0)
 	{
-		results_sig_cond <- c()
-		for(chr in 1:22)
+		if(!use_SPA)
 		{
-			if(sum(results_sig$CHR==chr)>=1)
+			results_sig_cond <- c()
+			for(chr in 1:22)
 			{
-				results_sig_chr <- results_sig[results_sig$CHR==chr,]
+				if(sum(results_sig$CHR==chr)>=1)
+				{
+					results_sig_chr <- results_sig[results_sig$CHR==chr,]
 
-				gds.path <- agds_dir[chr]
-				genofile <- seqOpen(gds.path)
+					gds.path <- agds_dir[chr]
+					genofile <- seqOpen(gds.path)
 
-				results_sig_cond_chr <- Individual_Analysis_cond(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel,known_loci=known_loci,variant_type="variant", QC_label=QC_label, geno_missing_imputation=geno_missing_imputation, method_cond=method_cond)
+					results_sig_cond_chr <- Individual_Analysis_cond(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel,known_loci=known_loci,variant_type="variant", QC_label=QC_label, geno_missing_imputation=geno_missing_imputation, method_cond=method_cond)
 
-				results_sig_cond <- rbind(results_sig_cond,results_sig_cond_chr)
+					results_sig_cond <- rbind(results_sig_cond,results_sig_cond_chr)
 
-				seqClose(genofile)
+					seqClose(genofile)
+				}
 			}
+			save(results_sig_cond,file=paste0(output_path,"results_sig_cond.Rdata"))
+			write.csv(results_sig_cond,paste0(output_path,"results_sig_cond.csv"))
+		}else
+		{
+			results_sig_cond <- c()
+			for(chr in 1:22)
+			{
+				if(sum(results_sig$CHR==chr)>=1)
+				{
+					if(file.exists(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
+					{
+						results_sig_chr <- results_sig[results_sig$CHR==chr,,drop=FALSE]
+
+						gds.path <- agds_dir[chr]
+						genofile <- seqOpen(gds.path)
+
+						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
+
+						results_sig_cond_chr <- Individual_Analysis_cond_spa(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel_cond,
+																				variant_type="variant",QC_label=QC_label,geno_missing_imputation=geno_missing_imputation,
+																				SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+
+						results_sig_cond <- rbind(results_sig_cond,results_sig_cond_chr)
+
+						seqClose(genofile)
+					}else
+					{
+						results_sig_chr <- results_sig[results_sig$CHR==chr,,drop=FALSE]
+
+						gds.path <- agds_dir[chr]
+						genofile <- seqOpen(gds.path)
+
+						results_sig_cond_chr <- Individual_Analysis_cond_spa(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel,
+																				variant_type="variant",QC_label=QC_label,geno_missing_imputation=geno_missing_imputation,
+																				SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+
+						results_sig_cond <- rbind(results_sig_cond,results_sig_cond_chr)
+
+						seqClose(genofile)
+					}
+				}
+			}
+			save(results_sig_cond,file=paste0(output_path,"results_sig_cond.Rdata"))
+			write.csv(results_sig_cond,paste0(output_path,"results_sig_cond.csv"))
 		}
-		save(results_sig_cond,file=paste0(output_path,"results_sig_cond.Rdata"))
-		write.csv(results_sig_cond,paste0(output_path,"results_sig_cond.csv"))
 	}
 }
 

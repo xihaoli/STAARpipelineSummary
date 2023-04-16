@@ -8,7 +8,7 @@
 #' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the annotation names and the corresponding channel names in the aGDS file.
 #' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
-#' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
+#' @return A data frame containing the basic information (chromosome, position, reference allele and alternative allele)
 #' and annotation scores for the input variants.
 #' @references Li, Z., Li, X., et al. (2022). A framework for detecting
 #' noncoding rare-variant associations of large-scale whole-genome sequencing

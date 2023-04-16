@@ -47,9 +47,9 @@
 #' including the STAAR-S p-value ("STAAR_S"), chromosome ("chr"), start position ("start_pos"), end position ("end_pos"),
 #' family-wise/genome-wide error rate (GWER) and the number of variants  ("SNV_nos").
 #' @return \code{SCANG_B_top1.Rdata} and \code{SCANG_B_top1.csv}: A matrix that summarized the top 1 unconditional region detected by SCANG-STAAR-B.
-#' Details see SCANG-STAAR-B.
+#' Details see SCANG-STAAR-S.
 #' @return \code{SCANG_O_top1.Rdata} and \code{SCANG_O_top1.csv}: A matrix that summarized the top 1 unconditional region detected by SCANG-STAAR-O.
-#' Details see SCANG-STAAR-O.
+#' Details see SCANG-STAAR-S.
 #' @return \code{SCANG_S_res.Rdata} and \code{SCANG_S_res.csv}: A matrix that summarized the significant regions (GWER<alpha) detected by SCANG-STAAR-S,
 #' including the negative log transformation of STAAR-S p-value ("-logp"), chromosome ("chr"), start position ("start_pos"), end position ("end_pos"),
 #' family-wise/genome-wide error rate (GWER) and the number of variants  ("SNV_num").

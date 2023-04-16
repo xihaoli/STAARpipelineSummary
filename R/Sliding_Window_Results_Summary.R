@@ -2,7 +2,8 @@
 #'
 #' The \code{Sliding_Window_Results_Summary} function takes in the results of sliding window analysis,
 #' the object from fitting the null model, and the set of known variants to be adjusted for in conditional analysis
-#' to summarize the sliding window analysis results and analyze the conditional association between a quantitative/dichotomous phenotype and
+#' to summarize the sliding window analysis results and analyze the conditional association between a quantitative/dichotomous phenotype
+#' (including imbalanced case-control setting) and
 #' the rare variants in the unconditional significant genetic region.
 #' @param agds_dir file directory of annotated GDS (aGDS) files for all chromosomes (1-22).
 #' @param jobs_num a data frame containing the number of jobs for association analysis.
@@ -15,6 +16,8 @@
 #' @param known_loci the data frame of variants to be adjusted for in conditional analysis and should
 #' contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
 #' and alternative allele (ALT) (default = NULL).
+#' @param cMAC_cutoff the cutoff of the minimum number of the cumulative minor allele of variants in the masks
+#' when summarizing the results (default = 0).
 #' @param method_cond a character value indicating the method for conditional analysis.
 #' \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
 #' as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
@@ -27,6 +30,8 @@
 #' as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
 #' \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 #' and taking the residuals (default = \code{optimal}).
+#' @param rare_maf_cutoff the cutoff of maximum minor allele frequency in
+#' defining rare variants (default = 0.01).
 #' @param QC_label channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").
 #' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
@@ -35,10 +40,14 @@
 #' @param alpha threshod to control the genome-wise (family-wise) error rate (default = 0.05), the p-value threshold is alpha/total number of sliding windows
 #' @param manhattan_plot output manhattan plot or not (default = FALSE).
 #' @param QQ_plot output Q-Q plot or not (default = FALSE).
+#' @param cond_null_model_name the null model name for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).
+#' @param cond_null_model_dir the directory of storing the null model for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).
+#' @param SPA_p_filter logical: are only the variants with a normal approximation based p-value smaller than a pre-specified threshold use the SPA method to recalculate the p-value, only used for imbalanced case-control setting (default = FALSE).
+#' @param p_filter_cutoff threshold for the p-value recalculation using the SPA method, only used for imbalanced case-control setting (default = 0.05).
 #' @return The function returns the following analysis results:
-#' @return \code{results_sliding_window_genome.Rdata}: a matrix contains the STAAR p-values (including STAAR-O) of the sliding windows across the genome.
-#' @return \code{sliding_window_sig.Rdata} and \code{sliding_window_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the significant sliding windows (unconditional p-value<alpha/total number of sliding windows).
-#' @return \code{sliding_window_sig_cond.Rdata} and \code{sliding_window_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the significant sliding windows (available if known_loci is not a NULL).
+#' @return \code{results_sliding_window_genome.Rdata}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the sliding windows across the genome.
+#' @return \code{sliding_window_sig.Rdata} and \code{sliding_window_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the significant sliding windows (unconditional p-value<alpha/total number of sliding windows).
+#' @return \code{sliding_window_sig_cond.Rdata} and \code{sliding_window_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the significant sliding windows (available if known_loci is not a NULL).
 #' @return manhattan plot (optional) and Q-Q plot (optional) of the sliding window analysis results.
 #' @references Li, Z., Li, X., et al. (2022). A framework for detecting
 #' noncoding rare-variant associations of large-scale whole-genome sequencing
@@ -47,17 +56,28 @@
 #' @export
 
 Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_path,sliding_window_results_name,
-                                           obj_nullmodel,known_loci=NULL,
-                                           method_cond=c("optimal","naive"),
+                                           obj_nullmodel,known_loci=NULL,cMAC_cutoff=0,
+                                           method_cond=c("optimal","naive"),rare_maf_cutoff=0.01,
                                            QC_label="annotation/filter",geno_missing_imputation=c("mean","minor"),variant_type=c("SNV","Indel","variant"),
                                            Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,
                                            Use_annotation_weights=FALSE,Annotation_name=NULL,
-                                           alpha=0.05,manhattan_plot=FALSE,QQ_plot=FALSE){
+                                           alpha=0.05,manhattan_plot=FALSE,QQ_plot=FALSE,
+                                           cond_null_model_name=NULL,cond_null_model_dir=NULL,
+                                           SPA_p_filter=FALSE,p_filter_cutoff=0.05){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
 	variant_type <- match.arg(variant_type)
 	geno_missing_imputation <- match.arg(geno_missing_imputation)
+
+	## SPA status
+	if(!is.null(obj_nullmodel$use_SPA))
+	{
+		use_SPA <- obj_nullmodel$use_SPA
+	}else
+	{
+		use_SPA <- FALSE
+	}
 
 	results_sliding_window_genome <- c()
 
@@ -87,14 +107,21 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	rm(results_sliding_window_genome_chr)
 	gc()
 
+	###### cMAC_cutoff
+	results_sliding_window_genome <- results_sliding_window_genome[results_sliding_window_genome[,"cMAC"]>cMAC_cutoff,]
+
 	save(results_sliding_window_genome,file=paste0(output_path,"results_sliding_window_genome.Rdata"))
 
 	dim(results_sliding_window_genome)
 
 	### Significant Results
-	alpha <- 0.05
-	results_sig <- results_sliding_window_genome[results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-O"]<alpha/dim(results_sliding_window_genome)[1],,drop=FALSE]
-
+	if(!use_SPA)
+	{
+		results_sig <- results_sliding_window_genome[results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-O"]<alpha/dim(results_sliding_window_genome)[1],,drop=FALSE]
+	}else
+	{
+		results_sig <- results_sliding_window_genome[results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-B"]<alpha/dim(results_sliding_window_genome)[1],,drop=FALSE]
+	}
 	save(results_sig,file=paste0(output_path,"sliding_window_sig.Rdata"))
 	write.csv(results_sig,paste0(output_path,"sliding_window_sig.csv"))
 
@@ -102,31 +129,71 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 
 	if(length(known_loci)!=0)
 	{
-		results_sig_cond <- c()
-		if(length(results_sig)!=0)
+		if(!use_SPA)
 		{
-			for(kk in 1:dim(results_sig)[1])
+			results_sig_cond <- c()
+			if(length(results_sig)!=0)
 			{
-				chr <- as.numeric(results_sig[kk,1])
-				start_loc <- as.numeric(results_sig[kk,2])
-				end_loc <- as.numeric(results_sig[kk,3])
+				for(kk in 1:dim(results_sig)[1])
+				{
+					chr <- as.numeric(results_sig[kk,1])
+					start_loc <- as.numeric(results_sig[kk,2])
+					end_loc <- as.numeric(results_sig[kk,3])
 
-				gds.path <- agds_dir[chr]
-				genofile <- seqOpen(gds.path)
+					gds.path <- agds_dir[chr]
+					genofile <- seqOpen(gds.path)
 
-				res_cond <- Sliding_Window_cond(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,
-				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,method_cond=method_cond,
+					res_cond <- Sliding_Window_cond(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,
+				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,
+												method_cond=method_cond,rare_maf_cutoff=rare_maf_cutoff,
 				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
 				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
 				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
-				results_sig_cond <- rbind(results_sig_cond,res_cond)
+					results_sig_cond <- rbind(results_sig_cond,res_cond)
 
-				seqClose(genofile)
+					seqClose(genofile)
+				}
+
+				save(results_sig_cond,file=paste0(output_path,"sliding_window_sig_cond.Rdata"))
+				write.csv(results_sig_cond,paste0(output_path,"sliding_window_sig_cond.csv"))
+			}
+		}else
+		{
+			results_sig_cond <- c()
+			if(length(results_sig)!=0)
+			{
+				for(kk in 1:dim(results_sig)[1])
+				{
+					chr <- as.numeric(results_sig[kk,1])
+					start_loc <- as.numeric(results_sig[kk,2])
+					end_loc <- as.numeric(results_sig[kk,3])
+
+					if(file.exists(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
+					{
+						gds.path <- agds_dir[chr]
+						genofile <- seqOpen(gds.path)
+
+						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
+
+						res_cond <- Sliding_Window_cond_spa(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel_cond,
+				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
+				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+												SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						results_sig_cond <- rbind(results_sig_cond,res_cond)
+
+						seqClose(genofile)
+					}else
+					{
+						res_sig_cond <- results_sig[kk,,drop=FALSE]
+					}
+				}
+
+				save(results_sig_cond,file=paste0(output_path,"sliding_window_sig_cond.Rdata"))
+				write.csv(results_sig_cond,paste0(output_path,"sliding_window_sig_cond.csv"))
 			}
 		}
-
-		save(results_sig_cond,file=paste0(output_path,"sliding_window_sig_cond.Rdata"))
-		write.csv(results_sig_cond,paste0(output_path,"sliding_window_sig_cond.csv"))
 	}
 
 	## manhattan plot
@@ -134,9 +201,16 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	{
 		print("Manhattan plot")
 
+
 		png(paste0(output_path,"sliding_window_manhattan.png"), width=12, height=8, units = 'in', res = 600)
 
-		print(manhattan_plot(as.numeric(results_sliding_window_genome[,1]), (as.numeric(results_sliding_window_genome[,2])+as.numeric(results_sliding_window_genome[,3]))/2, as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-O"]), col = c("blue4", "orange3"),sig.level=0.05/dim(results_sliding_window_genome)[1]))
+		if(!use_SPA)
+		{
+			print(manhattan_plot(as.numeric(results_sliding_window_genome[,1]), (as.numeric(results_sliding_window_genome[,2])+as.numeric(results_sliding_window_genome[,3]))/2, as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-O"]), col = c("blue4", "orange3"),sig.level=0.05/dim(results_sliding_window_genome)[1]))
+		}else
+		{
+			print(manhattan_plot(as.numeric(results_sliding_window_genome[,1]), (as.numeric(results_sliding_window_genome[,2])+as.numeric(results_sliding_window_genome[,3]))/2, as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-B"]), col = c("blue4", "orange3"),sig.level=0.05/dim(results_sliding_window_genome)[1]))
+		}
 
 		dev.off()
 	}
@@ -146,62 +220,101 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	{
 		print("Q-Q plot")
 
-		## STAAR-O
-		observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-O"]))
-		lobs <- -(log10(observed))
+		if(!use_SPA)
+		{
+			## STAAR-O
+			observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-O"]))
+			lobs <- -(log10(observed))
 
-		expected <- c(1:length(observed))
-		lexp <- -(log10(expected / (length(expected)+1)))
+			expected <- c(1:length(observed))
+			lexp <- -(log10(expected / (length(expected)+1)))
 
-		png(paste0(output_path,"sliding_window_qq_staar_o.png"), width=8, height=8, units = 'in', res = 600)
+			png(paste0(output_path,"sliding_window_qq_staar_o.png"), width=8, height=8, units = 'in', res = 600)
 
-		par(mar=c(5,6,4,4))
+			par(mar=c(5,6,4,4))
 
-		plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-		xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-		font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
+			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
 
-		abline(0, 1, col="red",lwd=2)
+			abline(0, 1, col="red",lwd=2)
 
-		dev.off()
+			dev.off()
 
-		## S(1,25)
-		observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="SKAT(1,25)"]))
-		lobs <- -(log10(observed))
+			## S(1,25)
+			observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="SKAT(1,25)"]))
+			lobs <- -(log10(observed))
 
-		expected <- c(1:length(observed))
-		lexp <- -(log10(expected / (length(expected)+1)))
+			expected <- c(1:length(observed))
+			lexp <- -(log10(expected / (length(expected)+1)))
 
-		png(paste0(output_path,"sliding_window_qq_skat_1_25.png"), width=8, height=8, units = 'in', res = 600)
+			png(paste0(output_path,"sliding_window_qq_skat_1_25.png"), width=8, height=8, units = 'in', res = 600)
 
-		par(mar=c(5,6,4,4))
+			par(mar=c(5,6,4,4))
 
-		plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-		xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-		font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
+			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
 
-		abline(0, 1, col="red",lwd=2)
+			abline(0, 1, col="red",lwd=2)
 
-		dev.off()
+			dev.off()
 
 
-		## B(1,1)
-		observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="Burden(1,1)"]))
-		lobs <- -(log10(observed))
+			## B(1,1)
+			observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="Burden(1,1)"]))
+			lobs <- -(log10(observed))
 
-		expected <- c(1:length(observed))
-		lexp <- -(log10(expected / (length(expected)+1)))
+			expected <- c(1:length(observed))
+			lexp <- -(log10(expected / (length(expected)+1)))
 
-		png(paste0(output_path,"sliding_window_qq_burden_1_1.png"), width=8, height=8, units = 'in', res = 600)
+			png(paste0(output_path,"sliding_window_qq_burden_1_1.png"), width=8, height=8, units = 'in', res = 600)
 
-		par(mar=c(5,6,4,4))
-		plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-		xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-		font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
-		abline(0, 1, col="red",lwd=2)
+			par(mar=c(5,6,4,4))
+			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
+			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			abline(0, 1, col="red",lwd=2)
 
-		dev.off()
+			dev.off()
+		}else
+		{
+			## STAAR-B
+			observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="STAAR-B"]))
+			lobs <- -(log10(observed))
 
+			expected <- c(1:length(observed))
+			lexp <- -(log10(expected / (length(expected)+1)))
+
+			png(paste0(output_path,"sliding_window_qq_staar_b.png"), width=8, height=8, units = 'in', res = 600)
+
+			par(mar=c(5,6,4,4))
+
+			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
+			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+
+			abline(0, 1, col="red",lwd=2)
+
+			dev.off()
+
+			## B(1,1)
+			observed <- sort(as.numeric(results_sliding_window_genome[,colnames(results_sliding_window_genome)=="Burden(1,1)"]))
+			lobs <- -(log10(observed))
+
+			expected <- c(1:length(observed))
+			lexp <- -(log10(expected / (length(expected)+1)))
+
+			png(paste0(output_path,"sliding_window_qq_burden_1_1.png"), width=8, height=8, units = 'in', res = 600)
+
+			par(mar=c(5,6,4,4))
+			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
+			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			abline(0, 1, col="red",lwd=2)
+
+			dev.off()
+		}
 	}
 }
 

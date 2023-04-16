@@ -12,7 +12,9 @@ Sliding_Window_Results_Summary(
   sliding_window_results_name,
   obj_nullmodel,
   known_loci = NULL,
+  cMAC_cutoff = 0,
   method_cond = c("optimal", "naive"),
+  rare_maf_cutoff = 0.01,
   QC_label = "annotation/filter",
   geno_missing_imputation = c("mean", "minor"),
   variant_type = c("SNV", "Indel", "variant"),
@@ -22,7 +24,11 @@ Sliding_Window_Results_Summary(
   Annotation_name = NULL,
   alpha = 0.05,
   manhattan_plot = FALSE,
-  QQ_plot = FALSE
+  QQ_plot = FALSE,
+  cond_null_model_name = NULL,
+  cond_null_model_dir = NULL,
+  SPA_p_filter = FALSE,
+  p_filter_cutoff = 0.05
 )
 }
 \arguments{
@@ -44,11 +50,17 @@ or the output from \code{fitNullModel} function in the \code{GENESIS} package an
 contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
 and alternative allele (ALT) (default = NULL).}
 
+\item{cMAC_cutoff}{the cutoff of the minimum number of the cumulative minor allele of variants in the masks
+when summarizing the results (default = 0).}
+
 \item{method_cond}{a character value indicating the method for conditional analysis.
 \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
 as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
 \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 and taking the residuals (default = \code{optimal}).}
+
+\item{rare_maf_cutoff}{the cutoff of maximum minor allele frequency in
+defining rare variants (default = 0.01).}
 
 \item{QC_label}{channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").}
 
@@ -69,22 +81,31 @@ and taking the residuals (default = \code{optimal}).}
 \item{manhattan_plot}{output manhattan plot or not (default = FALSE).}
 
 \item{QQ_plot}{output Q-Q plot or not (default = FALSE).}
+
+\item{cond_null_model_name}{the null model name for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).}
+
+\item{cond_null_model_dir}{the directory of storing the null model for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).}
+
+\item{SPA_p_filter}{logical: are only the variants with a normal approximation based p-value smaller than a pre-specified threshold use the SPA method to recalculate the p-value, only used for imbalanced case-control setting (default = FALSE).}
+
+\item{p_filter_cutoff}{threshold for the p-value recalculation using the SPA method, only used for imbalanced case-control setting (default = 0.05).}
 }
 \value{
 The function returns the following analysis results:
 
-\code{results_sliding_window_genome.Rdata}: a matrix contains the STAAR p-values (including STAAR-O) of the sliding windows across the genome.
+\code{results_sliding_window_genome.Rdata}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the sliding windows across the genome.
 
-\code{sliding_window_sig.Rdata} and \code{sliding_window_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the significant sliding windows (unconditional p-value<alpha/total number of sliding windows).
+\code{sliding_window_sig.Rdata} and \code{sliding_window_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the significant sliding windows (unconditional p-value<alpha/total number of sliding windows).
 
-\code{sliding_window_sig_cond.Rdata} and \code{sliding_window_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the significant sliding windows (available if known_loci is not a NULL).
+\code{sliding_window_sig_cond.Rdata} and \code{sliding_window_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the significant sliding windows (available if known_loci is not a NULL).
 
 manhattan plot (optional) and Q-Q plot (optional) of the sliding window analysis results.
 }
 \description{
 The \code{Sliding_Window_Results_Summary} function takes in the results of sliding window analysis,
 the object from fitting the null model, and the set of known variants to be adjusted for in conditional analysis
-to summarize the sliding window analysis results and analyze the conditional association between a quantitative/dichotomous phenotype and
+to summarize the sliding window analysis results and analyze the conditional association between a quantitative/dichotomous phenotype
+(including imbalanced case-control setting) and
 the rare variants in the unconditional significant genetic region.
 }
 \references{

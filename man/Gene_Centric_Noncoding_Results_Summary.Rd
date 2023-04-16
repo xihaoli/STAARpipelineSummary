@@ -16,7 +16,9 @@ Gene_Centric_Noncoding_Results_Summary(
   ncRNA_results_name,
   obj_nullmodel,
   known_loci = NULL,
+  cMAC_cutoff = 0,
   method_cond = c("optimal", "naive"),
+  rare_maf_cutoff = 0.01,
   QC_label = "annotation/filter",
   geno_missing_imputation = c("mean", "minor"),
   variant_type = c("SNV", "Indel", "variant"),
@@ -25,8 +27,14 @@ Gene_Centric_Noncoding_Results_Summary(
   Use_annotation_weights = FALSE,
   Annotation_name = NULL,
   alpha = 2.5e-06,
+  alpha_ncRNA = 2.5e-06,
+  ncRNA_pos = NULL,
   manhattan_plot = FALSE,
-  QQ_plot = FALSE
+  QQ_plot = FALSE,
+  cond_null_model_name = NULL,
+  cond_null_model_dir = NULL,
+  SPA_p_filter = FALSE,
+  p_filter_cutoff = 0.05
 )
 }
 \arguments{
@@ -55,11 +63,17 @@ or the output from \code{fitNullModel} function in the \code{GENESIS} package an
 contain 4 columns in the following order: chromosome (CHR), position (POS), reference allele (REF),
 and alternative allele (ALT) (default = NULL).}
 
+\item{cMAC_cutoff}{the cutoff of the minimum number of the cumulative minor allele of variants in the masks
+when summarizing the results (default = 0).}
+
 \item{method_cond}{a character value indicating the method for conditional analysis.
 \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
 as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
 \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 and taking the residuals (default = \code{optimal}).}
+
+\item{rare_maf_cutoff}{the cutoff of maximum minor allele frequency in
+defining rare variants (default = 0.01).}
 
 \item{QC_label}{channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").}
 
@@ -75,70 +89,82 @@ and taking the residuals (default = \code{optimal}).}
 
 \item{Annotation_name}{a vector of annotation names used in STAAR (default = NULL).}
 
-\item{alpha}{p-value threshold of significant results (default=2.5E-06).}
+\item{alpha}{p-value threshold of significant results of protein coding genes (default = 2.5E-06).}
+
+\item{alpha_ncRNA}{p-value threshold of significant results of ncRNA genes (default = 2.5E-06).}
+
+\item{ncRNA_pos}{positions of ncRNA genes, required for generating the Manhattan plot and Q-Q plot of the results of ncRNA genes (default=NULL).}
 
 \item{manhattan_plot}{output manhattan plot or not (default = FALSE).}
 
 \item{QQ_plot}{output Q-Q plot or not (default = FALSE).}
+
+\item{cond_null_model_name}{the null model name for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).}
+
+\item{cond_null_model_dir}{the directory of storing the null model for conditional analysis in the SPA setting, only used for imbalanced case-control setting (default = NULL).}
+
+\item{SPA_p_filter}{logical: are only the variants with a normal approximation based p-value smaller than a pre-specified threshold use the SPA method to recalculate the p-value, only used for imbalanced case-control setting (default = FALSE).}
+
+\item{p_filter_cutoff}{threshold for the p-value recalculation using the SPA method, only used for imbalanced case-control setting (default = 0.05).}
 }
 \value{
 The function returns the following analysis results:
 
-\code{noncoding_sig.csv}: a matrix that summarized the unconditional significant region detected by STAAR-O (STAAR-O pvalue smaller than the threshold alpha),
+\code{noncoding_sig.csv}: a matrix that summarized the unconditional significant region detected by STAAR-O or STAAR-B in imbalanced case-control setting (STAAR-O/-B pvalue smaller than the threshold alpha),
 including gene name ("Gene name"), chromosome ("chr"), coding functional category ("Category"), number of variants  ("#SNV"),
-and the unconditional STAAR p-values (including STAAR-O).
+and the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting).
 
-\code{noncoding_sig_cond.csv}: a matrix that summarized the conditional analysis results of the unconditional significant region detected by STAAR-O (available if known_loci is not a NULL),
+\code{noncoding_sig_cond.csv}: a matrix that summarized the conditional analysis results of the unconditional significant region detected by STAAR-O or STAAR-B in imbalanced case-control setting (available if known_loci is not a NULL),
 including gene name ("Gene name"), chromosome ("chr"), coding functional category ("Category"), number of variants  ("#SNV"),
-and the conditional STAAR p-values (including STAAR-O).
+and the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting).
 
-\code{results_UTR_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by UTR variants (UTR) for all protein-coding genes across the genome.
+\code{results_UTR_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by UTR variants (UTR) for all protein-coding genes across the genome.
 
-\code{UTR_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant UTR masks.
+\code{UTR_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant UTR masks.
 
-\code{UTR_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant UTR masks (available if known_loci is not a NULL).
+\code{UTR_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant UTR masks (available if known_loci is not a NULL).
 
-\code{results_upstream_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by upstream variants (upstream) for all protein-coding genes across the genome.
+\code{results_upstream_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by upstream variants (upstream) for all protein-coding genes across the genome.
 
-\code{upstream_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant upstream masks.
+\code{upstream_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant upstream masks.
 
-\code{upstream_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant upstream masks (available if known_loci is not a NULL).
+\code{upstream_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant upstream masks (available if known_loci is not a NULL).
 
-\code{results_downstream_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by downstream variants (downstream) for all protein-coding genes across the genome.
+\code{results_downstream_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by downstream variants (downstream) for all protein-coding genes across the genome.
 
-\code{downstream_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant downstream masks.
+\code{downstream_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant downstream masks.
 
-\code{downstream_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant downstream masks (available if known_loci is not a NULL).
+\code{downstream_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant downstream masks (available if known_loci is not a NULL).
 
-\code{results_promoter_CAGE_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by variants overlaid with CAGE sites in the promoter (promoter_CAGE) for all protein-coding genes across the genome.
+\code{results_promoter_CAGE_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by variants overlaid with CAGE sites in the promoter (promoter_CAGE) for all protein-coding genes across the genome.
 
-\code{promoter_CAGE_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant promoter_CAGE masks.
+\code{promoter_CAGE_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant promoter_CAGE masks.
 
-\code{promoter_CAGE_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant promoter_CAGE masks (available if known_loci is not a NULL).
+\code{promoter_CAGE_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant promoter_CAGE masks (available if known_loci is not a NULL).
 
-\code{results_promoter_DHS_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by variants overlaid with DHS sites in the promoter (promoter_DHS) for all protein-coding genes across the genome.
+\code{results_promoter_DHS_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by variants overlaid with DHS sites in the promoter (promoter_DHS) for all protein-coding genes across the genome.
 
-\code{promoter_DHS_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant promoter_DHS masks.
+\code{promoter_DHS_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant promoter_DHS masks.
 
-\code{promoter_DHS_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant promoter_DHS masks (available if known_loci is not a NULL).
+\code{promoter_DHS_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant promoter_DHS masks (available if known_loci is not a NULL).
 
-\code{results_enhancer_CAGE_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by variants overlaid with CAGE sites in the enhancer (enhancer_CAGE) for all protein-coding genes across the genome.
+\code{results_enhancer_CAGE_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by variants overlaid with CAGE sites in the enhancer (enhancer_CAGE) for all protein-coding genes across the genome.
 
-\code{enhancer_CAGE_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant enhancer_CAGE masks.
+\code{enhancer_CAGE_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant enhancer_CAGE masks.
 
-\code{enhancer_CAGE_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant enhancer_CAGE masks (available if known_loci is not a NULL).
+\code{enhancer_CAGE_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant enhancer_CAGE masks (available if known_loci is not a NULL).
 
-\code{results_enhancer_DHS_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by variants overlaid with DHS sites in the enhancer (enhancer_DHS) for all protein-coding genes across the genome.
+\code{results_enhancer_DHS_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by variants overlaid with DHS sites in the enhancer (enhancer_DHS) for all protein-coding genes across the genome.
 
-\code{enhancer_DHS_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant enhancer_DHS masks.
+\code{enhancer_DHS_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant enhancer_DHS masks.
 
-\code{enhancer_DHS_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant enhancer_DHS masks (available if known_loci is not a NULL).
+\code{enhancer_DHS_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant enhancer_DHS masks (available if known_loci is not a NULL).
 
-\code{results_ncRNA_genome}: a matrix contains the STAAR p-values (including STAAR-O) of the noncoding masks defined by exonic and splicing ncRNA variants (ncRNA) for all ncRNA genes across the genome.
+\code{results_ncRNA_genome}: a matrix contains the STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the noncoding masks defined by exonic and splicing ncRNA variants (ncRNA) for all ncRNA genes across the genome.
 
-\code{ncRNA_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O) of the unconditional significant ncRNA masks.
+\code{ncRNA_sig.csv}: a matrix contains the unconditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant ncRNA masks.
 
-\code{ncRNA_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O) of the unconditional significant ncRNA masks (available if known_loci is not a NULL).
+\code{ncRNA_sig_cond.csv}: a matrix contains the conditional STAAR p-values (including STAAR-O or STAAR-B in imbalanced case-control setting) of the unconditional significant ncRNA masks (available if known_loci is not a NULL).
 
 manhattan plot (optional) and Q-Q plot (optional) of the gene-centric noncoding analysis results.
 }
@@ -146,7 +172,8 @@ manhattan plot (optional) and Q-Q plot (optional) of the gene-centric noncoding 
 The \code{Gene_Centric_Noncoding_Results_Summary} function takes in the objects of gene-centric noncoding analysis results
 generated by \code{STAARpipeline} package,
 the object from fitting the null model, and the set of known variants to be adjusted for in conditional analysis
-to summarize the gene-centric noncoding analysis results and analyze the conditional association between a quantitative/dichotomous phenotype and
+to summarize the gene-centric noncoding analysis results and analyze the conditional association between a quantitative/dichotomous phenotype
+(including imbalanced case-control design) and
 the rare variants in the unconditional significant noncoding masks.
 }
 \references{

@@ -2,7 +2,7 @@
 #'
 #' The \code{Gene_Centric_Coding_Info} function takes in a coding mask of a gene to functionally annotate the rare variants in the mask.
 #' @param category the coding functional category of rare variants to be functionally annotated. Choices include
-#' \code{plof}, \code{plof_ds}, \code{missense}, \code{disruptive_missense}, \code{synonymous} (default = \code{plof}).
+#' \code{plof}, \code{plof_ds}, \code{missense}, \code{disruptive_missense}, \code{synonymous}, \code{ptv}, \code{ptv_ds} (default = \code{plof}).
 #' @param chr chromosome.
 #' @param genofile an object of opened annotated GDS (aGDS) file.
 #' @param obj_nullmodel an object from fitting the null model, which is either the output from \code{fit_nullmodel} function in the \code{STAARpipeline} package,
@@ -24,8 +24,8 @@
 #' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Annotation_name a vector of qualitative/quantitative annotation names user wants to extract.
-#' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele),
-#' unconditional and conditional the score test p-values,
+#' @return A data frame containing the basic information (chromosome, position, reference allele and alternative allele),
+#' unconditional and conditional the score test p-values (not provided for imbalanced case-control setting),
 #' and annotation scores for the rare variants of the input coding mask.
 #' @references Li, Z., Li, X., et al. (2022). A framework for detecting
 #' noncoding rare-variant associations of large-scale whole-genome sequencing
@@ -33,7 +33,7 @@
 #' (\href{https://doi.org/10.1038/s41592-022-01640-x}{pub})
 #' @export
 
-Gene_Centric_Coding_Info <- function(category=c("plof","plof_ds","missense","disruptive_missense","synonymous"),
+Gene_Centric_Coding_Info <- function(category=c("plof","plof_ds","missense","disruptive_missense","synonymous","ptv","ptv_ds"),
                                      chr,genofile,obj_nullmodel,gene_name,known_loci=NULL,rare_maf_cutoff=0.01,
                                      method_cond=c("optimal","naive"),
                                      QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
@@ -84,7 +84,21 @@ Gene_Centric_Coding_Info <- function(category=c("plof","plof_ds","missense","dis
 		                           method_cond=method_cond,QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
 		                           Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 	}
-
+	
+	if(category=="ptv")
+	{
+		results <- info_synonymous(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,gene_name=gene_name,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+		                           method_cond=method_cond,QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+		                           Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+	}
+	
+	if(category=="ptv_ds")
+	{
+		results <- info_synonymous(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,gene_name=gene_name,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+		                           method_cond=method_cond,QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+		                           Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+	}
+	
 	return(results)
 }
 
