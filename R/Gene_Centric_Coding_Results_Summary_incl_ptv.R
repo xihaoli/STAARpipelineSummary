@@ -247,7 +247,7 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 
 		# coding results
 		coding_sig <- rbind(plof_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")],
-							missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
+		                    missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
 		coding_sig <- rbind(coding_sig,synonymous_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
 		coding_sig <- rbind(coding_sig,plof_ds_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
 		coding_sig <- rbind(coding_sig,disruptive_missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
@@ -287,7 +287,7 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 
 		# coding results
 		coding_sig <- rbind(plof_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")],
-	                    missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
+		                    missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
 		coding_sig <- rbind(coding_sig,synonymous_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
 		coding_sig <- rbind(coding_sig,plof_ds_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
 		coding_sig <- rbind(coding_sig,disruptive_missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
@@ -324,10 +324,10 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Coding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+					                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 					plof_sig_cond <- rbind(plof_sig_cond,res_cond)
 
@@ -356,10 +356,10 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Coding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+					                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 					missense_sig_cond <- rbind(missense_sig_cond,res_cond)
 
@@ -387,10 +387,10 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Coding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+					                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 					synonymous_sig_cond <- rbind(synonymous_sig_cond,res_cond)
 
@@ -418,10 +418,10 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Coding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+					                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 					plof_ds_sig_cond <- rbind(plof_ds_sig_cond,res_cond)
 
@@ -449,10 +449,10 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Coding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+					                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 					disruptive_missense_sig_cond <- rbind(disruptive_missense_sig_cond,res_cond)
 
@@ -480,10 +480,10 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Coding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+					                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 					ptv_sig_cond <- rbind(ptv_sig_cond,res_cond)
 
@@ -511,10 +511,10 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Coding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                     obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+					                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 
 					ptv_ds_sig_cond <- rbind(ptv_ds_sig_cond,res_cond)
 
@@ -525,7 +525,7 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 
 			## coding cond
 			coding_sig_cond <- rbind(plof_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")],
-			missense_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
+			                         missense_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
 			coding_sig_cond <- rbind(coding_sig_cond,synonymous_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
 			coding_sig_cond <- rbind(coding_sig_cond,plof_ds_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
 			coding_sig_cond <- rbind(coding_sig_cond,disruptive_missense_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
@@ -558,11 +558,11 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Coding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                         obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                         variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                         Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                         Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                         SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -598,11 +598,11 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Coding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                         obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                         variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                         Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                         Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                         SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -638,11 +638,11 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Coding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                         obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                         variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                         Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                         Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                         SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -678,11 +678,11 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Coding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                         obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                         variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                         Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                         Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                         SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -718,11 +718,11 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Coding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                         obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                         variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                         Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                         Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                         SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -758,11 +758,11 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Coding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                         obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                         variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                         Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                         Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                         SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -798,11 +798,11 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Coding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                         obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                         variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                         Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                         Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                         SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -817,7 +817,7 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 
 			# coding results
 			coding_sig_cond <- rbind(plof_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")],
-							missense_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
+			                         missense_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
 			coding_sig_cond <- rbind(coding_sig_cond,synonymous_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
 			coding_sig_cond <- rbind(coding_sig_cond,plof_ds_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
 			coding_sig_cond <- rbind(coding_sig_cond,disruptive_missense_sig_cond[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])

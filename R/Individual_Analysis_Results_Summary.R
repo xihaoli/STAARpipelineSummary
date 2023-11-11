@@ -160,8 +160,8 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 
 		par(mar=c(5,6,4,4))
 		plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-		xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-		font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+		     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+		     font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
 
 		abline(0, 1, col="red",lwd=2)
 
@@ -183,7 +183,9 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 					gds.path <- agds_dir[chr]
 					genofile <- seqOpen(gds.path)
 
-					results_sig_cond_chr <- Individual_Analysis_cond(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel,known_loci=known_loci,variant_type="variant", QC_label=QC_label, geno_missing_imputation=geno_missing_imputation, method_cond=method_cond)
+					results_sig_cond_chr <- Individual_Analysis_cond(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel,
+					                                                 known_loci=known_loci,variant_type="variant",
+					                                                 QC_label=QC_label,geno_missing_imputation=geno_missing_imputation,method_cond=method_cond)
 
 					results_sig_cond <- rbind(results_sig_cond,results_sig_cond_chr)
 
@@ -209,8 +211,8 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						results_sig_cond_chr <- Individual_Analysis_cond_spa(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel_cond,
-																				variant_type="variant",QC_label=QC_label,geno_missing_imputation=geno_missing_imputation,
-																				SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                                     variant_type="variant",QC_label=QC_label,geno_missing_imputation=geno_missing_imputation,
+						                                                     SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 
 						results_sig_cond <- rbind(results_sig_cond,results_sig_cond_chr)
 
@@ -223,8 +225,8 @@ Individual_Analysis_Results_Summary <- function(agds_dir,jobs_num,input_path,out
 						genofile <- seqOpen(gds.path)
 
 						results_sig_cond_chr <- Individual_Analysis_cond_spa(chr=chr,individual_results=results_sig_chr,genofile,obj_nullmodel=obj_nullmodel,
-																				variant_type="variant",QC_label=QC_label,geno_missing_imputation=geno_missing_imputation,
-																				SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                                     variant_type="variant",QC_label=QC_label,geno_missing_imputation=geno_missing_imputation,
+						                                                     SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 
 						results_sig_cond <- rbind(results_sig_cond,results_sig_cond_chr)
 

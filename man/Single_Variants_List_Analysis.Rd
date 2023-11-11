@@ -31,9 +31,9 @@ or the output from \code{fitNullModel} function in the \code{GENESIS} package an
 \item{p_filter_cutoff}{threshold for the p-value recalculation using the SPA method (default = 0.05)}
 
 \item{tol}{a positive number specifying tolerance, the difference threshold for parameter
-estimates in saddlepoint apporximation algorithm below which iterations should be stopped (default = ".Machine$double.eps^0.25").}
+estimates in saddlepoint approximation algorithm below which iterations should be stopped (default = ".Machine$double.eps^0.25").}
 
-\item{max_iter}{a positive integers pecifying the maximum number of iterations for applying the saddlepoint approximation algorithm (default = "1000").}
+\item{max_iter}{a positive integer specifying the maximum number of iterations for applying the saddlepoint approximation algorithm (default = "1000").}
 }
 \value{
 a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
@@ -41,8 +41,8 @@ the score test p-values, and the effect sizes for the input variants.
 }
 \description{
 The \code{Single_Variants_List_Analysis} function takes in a list of variants to calculate the p-values and effect sizes of the input variants
-(effect size estimations are not provided for imbalanced case-control setting), 
-only support for null model fitting using sparse GRM.
+(effect size estimations are not provided for imbalanced case-control setting).
+Note: this function only supports for null model fitting using sparse GRM.
 }
 \references{
 Li, Z., Li, X., et al. (2022). A framework for detecting

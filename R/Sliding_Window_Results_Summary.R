@@ -144,11 +144,11 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Sliding_Window_cond(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,
-				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,
-												method_cond=method_cond,rare_maf_cutoff=rare_maf_cutoff,
-				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
-				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
-				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
+					                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,
+					                                method_cond=method_cond,rare_maf_cutoff=rare_maf_cutoff,
+					                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+					                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
+					                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name)
 					results_sig_cond <- rbind(results_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -176,11 +176,11 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Sliding_Window_cond_spa(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel_cond,
-				                                start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
-				                                Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
-				                                Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-												SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                    start_loc=start_loc,end_loc=end_loc,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                    QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
+						                                    Annotation_name_catalog=Annotation_name_catalog,Annotation_dir=Annotation_dir,
+						                                    Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                    SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						results_sig_cond <- rbind(results_sig_cond,res_cond)
 
 						seqClose(genofile)
@@ -200,7 +200,6 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	if(manhattan_plot)
 	{
 		print("Manhattan plot")
-
 
 		png(paste0(output_path,"sliding_window_manhattan.png"), width=12, height=8, units = 'in', res = 600)
 
@@ -234,8 +233,8 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 			par(mar=c(5,6,4,4))
 
 			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			     font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
 
 			abline(0, 1, col="red",lwd=2)
 
@@ -253,8 +252,8 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 			par(mar=c(5,6,4,4))
 
 			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			     font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
 
 			abline(0, 1, col="red",lwd=2)
 
@@ -271,9 +270,11 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 			png(paste0(output_path,"sliding_window_qq_burden_1_1.png"), width=8, height=8, units = 'in', res = 600)
 
 			par(mar=c(5,6,4,4))
+
 			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			     font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+
 			abline(0, 1, col="red",lwd=2)
 
 			dev.off()
@@ -291,8 +292,8 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 			par(mar=c(5,6,4,4))
 
 			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			     font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
 
 			abline(0, 1, col="red",lwd=2)
 
@@ -308,9 +309,11 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 			png(paste0(output_path,"sliding_window_qq_burden_1_1.png"), width=8, height=8, units = 'in', res = 600)
 
 			par(mar=c(5,6,4,4))
+
 			plot(lexp,lobs,pch=20, cex=1, xlim = c(0, max(lexp)), ylim = c(0, max(lobs)),
-			xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-			font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+			     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			     font.lab=2,cex.lab=2,cex.axis=2,font.axis=2)
+
 			abline(0, 1, col="red",lwd=2)
 
 			dev.off()

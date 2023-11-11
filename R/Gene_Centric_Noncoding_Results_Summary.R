@@ -371,10 +371,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Noncoding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 					UTR_sig_cond <- rbind(UTR_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -406,10 +406,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Noncoding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 					upstream_sig_cond <- rbind(upstream_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -438,10 +438,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Noncoding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 					downstream_sig_cond <- rbind(downstream_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -470,10 +470,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Noncoding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 					promoter_CAGE_sig_cond <- rbind(promoter_CAGE_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -502,10 +502,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Noncoding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 					promoter_DHS_sig_cond <- rbind(promoter_DHS_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -534,10 +534,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Noncoding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 					enhancer_CAGE_sig_cond <- rbind(enhancer_CAGE_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -566,10 +566,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- Gene_Centric_Noncoding_cond(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                                        obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                                        variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                                        Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                                        Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 
 					enhancer_DHS_sig_cond <- rbind(enhancer_DHS_sig_cond,res_cond)
 
@@ -599,10 +599,10 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 					genofile <- seqOpen(gds.path)
 
 					res_cond <- ncRNA_cond(chr=chr,gene_name=gene_name,genofile=genofile,
-				                       obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                       variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                       Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
-				                       Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
+					                       obj_nullmodel=obj_nullmodel,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+					                       variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+					                       Annotation_dir=Annotation_dir,Use_annotation_weights=Use_annotation_weights,
+					                       Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 					ncRNA_sig_cond <- rbind(ncRNA_sig_cond,res_cond)
 
 					seqClose(genofile)
@@ -639,11 +639,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Noncoding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                            obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                            variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                            Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                            Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                            SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -682,11 +682,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Noncoding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                            obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                            variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                            Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                            Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                            SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -724,11 +724,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Noncoding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                            obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                            variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                            Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                            Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                            SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -766,11 +766,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Noncoding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                            obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                            variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                            Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                            Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                            SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -808,11 +808,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Noncoding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                            obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                            variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                            Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                            Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                            SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -850,11 +850,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Noncoding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                            obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                            variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                            Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                            Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                            SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -892,11 +892,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- Gene_Centric_Noncoding_cond_spa(chr=chr,gene_name=gene_name,category=category,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                                            obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                                            variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                                            Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                                            Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                                            SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -934,11 +934,11 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 						obj_nullmodel_cond <- get(load(paste0(cond_null_model_dir,cond_null_model_name,".chr",chr,".Rdata")))
 
 						res_cond <- ncRNA_cond_spa(chr=chr,gene_name=gene_name,genofile=genofile,
-				                                     obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
-				                                     variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
-				                                     Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
-				                                     Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
-													 SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
+						                           obj_nullmodel=obj_nullmodel_cond,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+						                           variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,QC_label=QC_label,
+						                           Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
+						                           Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,
+						                           SPA_p_filter=SPA_p_filter,p_filter_cutoff=p_filter_cutoff)
 						seqClose(genofile)
 					}else
 					{
@@ -1446,8 +1446,8 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 			png(paste0(ncRNA_output_path,"gene_centric_ncRNA_qqplot.png"), width = 9, height = 9, units = 'in', res = 600)
 
 			plot(lexp,lobs,pch=20, cex=cex_point, xlim = c(0, 5), ylim = c(0, min_ncRNA_y),
-		     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
-		     font.lab=2,cex.lab=1,cex.axis=1,font.axis=2)
+			     xlab = expression(Expected ~ ~-log[10](italic(p))), ylab = expression(Observed ~ ~-log[10](italic(p))),
+			     font.lab=2,cex.lab=1,cex.axis=1,font.axis=2)
 
 			abline(0, 1, col="red",lwd=1)
 

@@ -1,8 +1,8 @@
 #' Calculate individual-variant p-values of a list of variants
 #'
 #' The \code{Single_Variants_List_Analysis} function takes in a list of variants to calculate the p-values and effect sizes of the input variants
-#' (effect size estimations are not provided for imbalanced case-control setting), 
-#' only support for null model fitting using sparse GRM.
+#' (effect size estimations are not provided for imbalanced case-control setting).
+#' Note: this function only supports for null model fitting using sparse GRM.
 #' @param agds_dir file directory of annotated GDS (aGDS) files for all chromosomes (1-22).
 #' @param single_variants_list name a data frame containing the information of variants to be functionally annotated. The data frame must include 4 columns with
 #' the following names: "CHR" (chromosome number), "POS" (position), "REF" (reference allele), and "ALT" (alternative allele).
@@ -12,8 +12,8 @@
 #' @param QC_label channel name of the QC label in the GDS/aGDS file (default = "annotation/filter").
 #' @param p_filter_cutoff threshold for the p-value recalculation using the SPA method (default = 0.05)
 #' @param tol a positive number specifying tolerance, the difference threshold for parameter
-#' estimates in saddlepoint apporximation algorithm below which iterations should be stopped (default = ".Machine$double.eps^0.25").
-#' @param max_iter a positive integers pecifying the maximum number of iterations for applying the saddlepoint approximation algorithm (default = "1000").
+#' estimates in saddlepoint approximation algorithm below which iterations should be stopped (default = ".Machine$double.eps^0.25").
+#' @param max_iter a positive integer specifying the maximum number of iterations for applying the saddlepoint approximation algorithm (default = "1000").
 #' @return a data frame containing the basic information (chromosome, position, reference allele and alternative allele)
 #' the score test p-values, and the effect sizes for the input variants.
 #' @references Li, Z., Li, X., et al. (2022). A framework for detecting
@@ -24,14 +24,14 @@
 
 Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_nullmodel,
                                           QC_label="annotation/filter",geno_missing_imputation=c("mean","minor"),
-										  p_filter_cutoff=0.05,tol=.Machine$double.eps^0.25,max_iter=1000){
+                                          p_filter_cutoff=0.05,tol=.Machine$double.eps^0.25,max_iter=1000){
 
 	## evaluate choices
 	geno_missing_imputation <- match.arg(geno_missing_imputation)
 
 	phenotype.id <- as.character(obj_nullmodel$id_include)
 	samplesize <- length(phenotype.id)
-	
+
 	n_pheno <- obj_nullmodel$n.pheno
 
 	if(!is.null(obj_nullmodel$use_SPA))
@@ -41,13 +41,13 @@ Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_null
 	{
 		use_SPA <- FALSE
 	}
-		
+
 	Sigma_i <- obj_nullmodel$Sigma_i
 	Sigma_iX <- as.matrix(obj_nullmodel$Sigma_iX)
 	cov <- obj_nullmodel$cov
 
 	residuals.phenotype <- obj_nullmodel$scaled.residuals
-	
+
 	## SPA
 	if(use_SPA)
 	{
@@ -127,7 +127,7 @@ Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_null
 			filter <- seqGetData(genofile, QC_label)
 
 			N <- rep(samplesize,length(CHR))
-			
+
 			Geno <- Geno$Geno
 
 			### calculate p-values
@@ -139,7 +139,7 @@ Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_null
 				Geno <- Diagonal(n = n_pheno) %x% Geno
 				Score_test <- Individual_Score_Test_sp_multi(Geno, Sigma_i, Sigma_iX, cov, residuals.phenotype, n_pheno)
 			}
-			
+
 			## SPA approximation for small p-values
 			if(use_SPA)
 			{
@@ -157,16 +157,16 @@ Single_Variants_List_Analysis <- function(agds_dir,single_variants_list,obj_null
 			if(use_SPA)
 			{
 				single_variants_list_annotation_chr <-data.frame(CHR=CHR,POS=position,REF=REF,ALT=ALT,ALT_AF=ALT_AF,QC_label=filter,MAF=MAF,N=N,
-			                                                 pvalue=pvalue)
+				                                                 pvalue=pvalue)
 			}else
 			{
 				single_variants_list_annotation_chr <-data.frame(CHR=CHR,POS=position,REF=REF,ALT=ALT,ALT_AF=ALT_AF,QC_label=filter,MAF=MAF,N=N,
-			                                                 pvalue=exp(-Score_test$pvalue_log),pvalue_log10=Score_test$pvalue_log/log(10),
-			                                                 Score=Score_test$Score,Score_se=Score_test$Score_se,
-			                                                 Est=Score_test$Est,Est_se=Score_test$Est_se)
+				                                                 pvalue=exp(-Score_test$pvalue_log),pvalue_log10=Score_test$pvalue_log/log(10),
+				                                                 Score=Score_test$Score,Score_se=Score_test$Score_se,
+				                                                 Est=Score_test$Est,Est_se=Score_test$Est_se)
 			}
-			
-			
+
+
 			single_variants_list_annotation <- rbind(single_variants_list_annotation,single_variants_list_annotation_chr)
 			seqClose(genofile)
 		}
