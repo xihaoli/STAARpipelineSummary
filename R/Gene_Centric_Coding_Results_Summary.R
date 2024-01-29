@@ -675,7 +675,13 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		colnames(genes_info_manhattan)[dim(genes_info_manhattan)[2]] <- "plof_ds"
 
 		### missense
-		results_STAAR <- results_missense_genome[,c(1,2,dim(results_missense_genome)[2]-6)]
+		if(!use_SPA)
+		{
+			results_STAAR <- results_missense_genome[,c(1,2,dim(results_missense_genome)[2]-6)]
+		}else
+		{
+			results_STAAR <- results_missense_genome[,c(1,2,dim(results_missense_genome)[2]-2)]
+		}
 
 		results_m <- c()
 		for(i in 1:dim(results_STAAR)[2])
@@ -804,7 +810,13 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 			colnames(genes_info_manhattan)[dim(genes_info_manhattan)[2]] <- "plof_ds"
 
 			### missense
-			results_STAAR <- results_missense_genome[,c(1,2,dim(results_missense_genome)[2]-6)]
+			if(!use_SPA)
+			{
+				results_STAAR <- results_missense_genome[,c(1,2,dim(results_missense_genome)[2]-6)]
+			}else
+			{
+				results_STAAR <- results_missense_genome[,c(1,2,dim(results_missense_genome)[2]-2)]
+			}
 
 			results_m <- c()
 			for(i in 1:dim(results_STAAR)[2])
