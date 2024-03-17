@@ -160,19 +160,16 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 			{
 				results_synonymous_genome <- rbind(results_synonymous_genome,results)
 			}
-
 			### ptv
 			if(results[3]=="ptv")
 			{
 				results_ptv_genome <- rbind(results_ptv_genome,results)
 			}
-
 			### ptv_ds
 			if(results[3]=="ptv_ds")
 			{
 				results_ptv_ds_genome <- rbind(results_ptv_ds_genome,results)
 			}
-
 		}
 
 		if(kk%%1000==0)
@@ -212,7 +209,6 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 	save(results_ptv_genome,file=paste0(output_path,"ptv.Rdata"))
 	# ptv + disruptive missense
 	save(results_ptv_ds_genome,file=paste0(output_path,"ptv_ds.Rdata"))
-
 
 	if(use_SPA)
 	{

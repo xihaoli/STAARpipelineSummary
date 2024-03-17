@@ -199,7 +199,6 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 	# enhancer_DHS
 	results_enhancer_DHS_genome <- results_enhancer_DHS_genome[results_enhancer_DHS_genome[,"cMAC"]>cMAC_cutoff,]
 
-
 	###### whole-genome results
 	# UTR
 	save(results_UTR_genome,file=paste0(output_path,"UTR.Rdata"))
@@ -216,8 +215,7 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 	# enahncer DHS
 	save(results_enhancer_DHS_genome,file=paste0(output_path,"enhancer_DHS.Rdata"))
 
-
-	####### ncRNA
+	###### ncRNA
 	results_ncRNA_genome <- c()
 
 	for(kk in 1:ncRNA_jobs_num)
@@ -225,7 +223,6 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		print(kk)
 		results_ncRNA <- get(load(paste0(ncRNA_input_path,ncRNA_results_name,"_",kk,".Rdata")))
 		results_ncRNA_genome <- rbind(results_ncRNA_genome,results_ncRNA)
-
 	}
 
 	###### cMAC_cutoff
@@ -233,7 +230,6 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 
 	###### whole-genome results
 	save(results_ncRNA_genome,file=paste0(ncRNA_output_path,"results_ncRNA_genome.Rdata"))
-
 
 	###### significant results
 	if(!use_SPA)
@@ -340,7 +336,6 @@ Gene_Centric_Noncoding_Results_Summary <- function(agds_dir,gene_centric_noncodi
 		noncoding_sig <- rbind(noncoding_sig,ncRNA_sig)
 
 		write.csv(noncoding_sig,file=paste0(output_path,"noncoding_sig.csv"))
-
 	}
 
 	#######################################################

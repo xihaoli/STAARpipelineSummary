@@ -206,7 +206,6 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		disruptive_missense_sig <- results_disruptive_missense_genome[results_disruptive_missense_genome[,"STAAR-B"]<alpha,,drop=FALSE]
 		write.csv(disruptive_missense_sig,file=paste0(output_path,"disruptive_missense_sig.csv"))
 
-
 		# coding results
 		coding_sig <- rbind(plof_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")],
 		                    missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","Burden(1,1)","STAAR-B")])
@@ -237,7 +236,6 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 		disruptive_missense_sig <- results_disruptive_missense_genome[results_disruptive_missense_genome[,"STAAR-O"]<alpha,,drop=FALSE]
 		write.csv(disruptive_missense_sig,file=paste0(output_path,"disruptive_missense_sig.csv"))
 
-
 		# coding results
 		coding_sig <- rbind(plof_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")],
 		                    missense_sig[,c("Gene name","Chr","Category","#SNV","cMAC","SKAT(1,25)","Burden(1,1)","ACAT-V(1,25)","STAAR-O")])
@@ -247,7 +245,6 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 
 		write.csv(coding_sig,file=paste0(output_path,"coding_sig.csv"))
 	}
-
 
 	#######################################################
 	#     conditional analysis
