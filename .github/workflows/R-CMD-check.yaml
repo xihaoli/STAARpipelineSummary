@@ -31,6 +31,7 @@ jobs:
           needs: |
             website
             coverage
+          install-pandoc: true
       - name: Check
         run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
         shell: Rscript {0}
