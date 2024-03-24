@@ -17,8 +17,8 @@ Gene_Centric_Coding_Results_Summary_incl_ptv(
   method_cond = c("optimal", "naive"),
   rare_maf_cutoff = 0.01,
   QC_label = "annotation/filter",
-  geno_missing_imputation = c("mean", "minor"),
   variant_type = c("SNV", "Indel", "variant"),
+  geno_missing_imputation = c("mean", "minor"),
   Annotation_dir = "annotation/info/FunctionalAnnotation",
   Annotation_name_catalog,
   Use_annotation_weights = FALSE,
@@ -64,9 +64,9 @@ defining rare variants (default = 0.01).}
 
 \item{QC_label}{channel name of the QC label in the GDS/aGDS file  (default = "annotation/filter").}
 
-\item{geno_missing_imputation}{method of handling missing genotypes. Either "mean" or "minor" (default = "mean").}
-
 \item{variant_type}{type of variant included in the analysis. Choices include "SNV", "Indel", or "variant" (default = "SNV").}
+
+\item{geno_missing_imputation}{method of handling missing genotypes. Either "mean" or "minor" (default = "mean").}
 
 \item{Annotation_dir}{channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").}
 

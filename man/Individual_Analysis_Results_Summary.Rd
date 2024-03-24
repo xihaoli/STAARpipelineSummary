@@ -14,6 +14,7 @@ Individual_Analysis_Results_Summary(
   known_loci = NULL,
   method_cond = c("optimal", "naive"),
   QC_label = "annotation/filter",
+  variant_type = c("variant", "SNV", "Indel"),
   geno_missing_imputation = c("mean", "minor"),
   alpha = 5e-09,
   manhattan_plot = FALSE,
@@ -50,6 +51,8 @@ as well as all covariates used in fitting the null model (fully adjusted) and ta
 and taking the residuals (default = \code{optimal}).}
 
 \item{QC_label}{channel name of the QC label in the GDS/aGDS file.}
+
+\item{variant_type}{type of variant included in the analysis. Choices include "variant", "SNV", or "Indel" (default = "variant").}
 
 \item{geno_missing_imputation}{method of handling missing genotypes. Either "mean" or "minor" (default = "mean").}
 

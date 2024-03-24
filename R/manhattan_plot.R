@@ -2,8 +2,8 @@ manhattan_plot<-function(chr, pos, pvalue,
                          sig.level=NA, annotate=NULL, ann.default=list(),
                          should.thin=T, thin.pos.places=2, thin.logp.places=2,
                          xlab="Chromosome", ylab=expression(-log[10](p-value)),
-                         col=c("gray","darkgray"), panel.extra=NULL, pch=20, 
-						 use_logp=FALSE,cex=0.8,...) {
+                         col=c("gray","darkgray"), panel.extra=NULL, pch=20,
+                         use_logp=FALSE,cex=0.8,...) {
 
 	if (length(chr)==0) stop("chromosome vector is empty")
 	if (length(pos)==0) stop("position vector is empty")

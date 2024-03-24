@@ -24,16 +24,11 @@
 #' as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
 #' \code{naive} refers to regressing residuals from the null model on \code{known_loci}
 #' and taking the residuals (default = \code{optimal}).
-#' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
-#' @param variant_type type of variant included in the analysis. Choices include "SNV", "Indel", or "variant" (default = "SNV").
-#' @param method_cond a character value indicating the method for conditional analysis.
-#' \code{optimal} refers to regressing residuals from the null model on \code{known_loci}
-#' as well as all covariates used in fitting the null model (fully adjusted) and taking the residuals;
-#' \code{naive} refers to regressing residuals from the null model on \code{known_loci}
-#' and taking the residuals (default = \code{optimal}).
 #' @param rare_maf_cutoff the cutoff of maximum minor allele frequency in
 #' defining rare variants (default = 0.01).
 #' @param QC_label channel name of the QC label in the GDS/aGDS file  (default = "annotation/filter").
+#' @param variant_type type of variant included in the analysis. Choices include "SNV", "Indel", or "variant" (default = "SNV").
+#' @param geno_missing_imputation method of handling missing genotypes. Either "mean" or "minor" (default = "mean").
 #' @param Annotation_dir channel name of the annotations in the aGDS file \cr (default = "annotation/info/FunctionalAnnotation").
 #' @param Annotation_name_catalog a data frame containing the name and the corresponding channel name in the aGDS file.
 #' @param Use_annotation_weights use annotations as weights or not (default = FALSE).
@@ -83,14 +78,14 @@
 #' @export
 
 Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_coding_jobs_num,input_path,output_path,gene_centric_results_name,
-                                                obj_nullmodel,known_loci=NULL,cMAC_cutoff=0,
-                                                method_cond=c("optimal","naive"),rare_maf_cutoff=0.01,
-                                                QC_label="annotation/filter",geno_missing_imputation=c("mean","minor"),variant_type=c("SNV","Indel","variant"),
-                                                Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,
-                                                Use_annotation_weights=FALSE,Annotation_name=NULL,
-                                                alpha=2.5E-06,manhattan_plot=FALSE,QQ_plot=FALSE,
-                                                cond_null_model_name=NULL,cond_null_model_dir=NULL,
-                                                SPA_p_filter=FALSE,p_filter_cutoff=0.05){
+                                                         obj_nullmodel,known_loci=NULL,cMAC_cutoff=0,
+                                                         method_cond=c("optimal","naive"),rare_maf_cutoff=0.01,
+                                                         QC_label="annotation/filter",variant_type=c("SNV","Indel","variant"),geno_missing_imputation=c("mean","minor"),
+                                                         Annotation_dir="annotation/info/FunctionalAnnotation",Annotation_name_catalog,
+                                                         Use_annotation_weights=FALSE,Annotation_name=NULL,
+                                                         alpha=2.5E-06,manhattan_plot=FALSE,QQ_plot=FALSE,
+                                                         cond_null_model_name=NULL,cond_null_model_dir=NULL,
+                                                         SPA_p_filter=FALSE,p_filter_cutoff=0.05){
 
 	## evaluate choices
 	method_cond <- match.arg(method_cond)
