@@ -13,11 +13,11 @@ install:
 
 environment:
   matrix:
-  - R_VERSION: release
+  - R_VERSION: 4.2.3
     R_ARCH: x64
     BIOC_USE_DEVEL: FALSE
     USE_RTOOLS: TRUE
-    PKGTYPE: binary
+    PKGTYPE: both
 
 branches:
   only:
