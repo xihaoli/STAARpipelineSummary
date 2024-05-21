@@ -17,7 +17,7 @@ environment:
     R_ARCH: x64
     BIOC_USE_DEVEL: FALSE
     USE_RTOOLS: TRUE
-    PKGTYPE: both
+    PKGTYPE: binary
 
 branches:
   only:
@@ -28,6 +28,7 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh install_bioc GenomeInfoDbData
   - travis-tool.sh install_bioc TxDb.Hsapiens.UCSC.hg38.knownGene
+  - Rscript -e install.packages('lme4',type='source',repos='https://cran.rstudio.com')
   - travis-tool.sh install_github xihaoli/STAAR
   - travis-tool.sh install_github xihaoli/MultiSTAAR
   - travis-tool.sh install_github zilinli1988/SCANG
