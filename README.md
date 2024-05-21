@@ -1,5 +1,4 @@
 [![R build status](https://github.com/xihaoli/STAARpipelineSummary/workflows/R-CMD-check/badge.svg)](https://github.com/xihaoli/STAARpipelineSummary/actions)
-[![Build Status](https://travis-ci.com/xihaoli/STAARpipelineSummary.svg?branch=main)](https://app.travis-ci.com/github/xihaoli/STAARpipelineSummary)
 [![Build status](https://ci.appveyor.com/api/projects/status/glc569adbr7ar11j/branch/main?svg=true)](https://ci.appveyor.com/project/xihaoli/staarpipelinesummary/branch/main)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
