@@ -189,7 +189,6 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 	# ptv + disruptive missense
 	results_ptv_ds_genome <- results_ptv_ds_genome[results_ptv_ds_genome[,"cMAC"]>cMAC_cutoff,]
 
-
 	### recalculate missense pvalue
 	if(cMAC_cutoff > 0)
 	{
@@ -341,7 +340,6 @@ Gene_Centric_Coding_Results_Summary_incl_ptv <- function(agds_dir,gene_centric_c
 			}
 		}
 	}
-
 
 	###### whole-genome results
 	# plof
