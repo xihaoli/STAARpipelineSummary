@@ -1,5 +1,4 @@
 [![R build status](https://github.com/xihaoli/STAARpipelineSummary/workflows/R-CMD-check/badge.svg)](https://github.com/xihaoli/STAARpipelineSummary/actions)
-[![Build status](https://ci.appveyor.com/api/projects/status/glc569adbr7ar11j/branch/main?svg=true)](https://ci.appveyor.com/project/xihaoli/staarpipelinesummary/branch/main)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # STAARpipelineSummary
@@ -30,7 +29,7 @@ Please see the <a href="docs/STAARpipelineSummary_manual.pdf">**STAARpipelineSum
 ## Data Availability
 The whole-genome functional annotation data assembled from a variety of sources and the precomputed annotation principal components are available at the [Functional Annotation of Variant - Online Resource (FAVOR)](https://favor.genohub.org) site and [FAVOR Essential Database](https://doi.org/10.7910/DVN/1VGTJI).
 ## Version
-The current version is 0.9.7 (March 23, 2024).
+The current version is 0.9.7 (July 25, 2024).
 ## Citation
 If you use **STAARpipeline** and **STAARpipelineSummary** for your work, please cite:
 

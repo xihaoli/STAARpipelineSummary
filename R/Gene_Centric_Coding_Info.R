@@ -87,14 +87,14 @@ Gene_Centric_Coding_Info <- function(category=c("plof","plof_ds","missense","dis
 	
 	if(category=="ptv")
 	{
-		results <- info_synonymous(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,gene_name=gene_name,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+		results <- info_ptv(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,gene_name=gene_name,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
 		                           method_cond=method_cond,QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
 		                           Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 	}
 	
 	if(category=="ptv_ds")
 	{
-		results <- info_synonymous(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,gene_name=gene_name,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
+		results <- info_ptv_ds(chr=chr,genofile=genofile,obj_nullmodel=obj_nullmodel,gene_name=gene_name,known_loci=known_loci,rare_maf_cutoff=rare_maf_cutoff,
 		                           method_cond=method_cond,QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
 		                           Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,Annotation_name=Annotation_name)
 	}

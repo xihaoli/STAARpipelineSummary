@@ -166,6 +166,158 @@ Gene_Centric_Coding_Results_Summary <- function(agds_dir,gene_centric_coding_job
 	# synonymous
 	results_synonymous_genome <- results_synonymous_genome[results_synonymous_genome[,"cMAC"]>cMAC_cutoff,]
 
+	### recalculate missense pvalue
+	if(cMAC_cutoff > 0)
+	{
+		genes_name_disruptive_missense <- as.vector(unlist(results_disruptive_missense_genome[,1])) 
+		genes_name_missense <- as.vector(unlist(results_missense_genome[,1])) 
+
+		recal_id <- (1:dim(results_missense_genome)[1])[(!genes_name_missense%in%genes_name_disruptive_missense)]
+
+		for(kk in recal_id)
+		{
+			print(kk)
+			results_m <- results_missense_genome[kk,]
+			
+			if(use_SPA)
+			{
+				## disruptive missense cMAC < cut_off, set p-value to 1 
+				results_missense_genome[kk,"Burden(1,25)-Disruptive"] <- 1
+				results_missense_genome[kk,"Burden(1,1)-Disruptive"] <- 1
+
+				apc_num <- (length(results_m)-10)/2
+				p_seq <- c(1:apc_num,1:apc_num+(apc_num+1))
+				
+				## calculate STAAR-B
+				pvalues_sub <- as.numeric(results_m[6:length(results_m)][p_seq])
+				
+				if(sum(is.na(pvalues_sub))>0)
+				{
+					if(sum(is.na(pvalues_sub))==length(pvalues_sub))
+					{
+						results_m["STAAR-B"] <- 1
+					}else
+					{
+						## not all NAs
+						pvalues_sub <- pvalues_sub[!is.na(pvalues_sub)]
+						if(sum(pvalues_sub[pvalues_sub<1])>0)
+						{
+							## not all ones
+							results_m["STAAR-B"] <- CCT(pvalues_sub[pvalues_sub<1])
+
+						}else
+						{
+							results_m["STAAR-B"] <- 1
+
+						}
+					}
+				}else
+				{
+					if(sum(pvalues_sub[pvalues_sub<1])>0)
+					{
+						results_m["STAAR-B"] <- CCT(pvalues_sub[pvalues_sub<1])
+					}else
+					{
+						results_m["STAAR-B"] <- 1
+					}
+				}
+				
+				results_missense_genome[kk,"STAAR-B"] <- results_m["STAAR-B"]
+				
+				## calculate STAAR-B(1,25)
+				pvalues_sub <- as.numeric(results_m[6:length(results_m)][c(1:apc_num)])
+				if(sum(is.na(pvalues_sub))>0)
+				{
+					if(sum(is.na(pvalues_sub))==length(pvalues_sub))
+					{
+						results_m["STAAR-B(1,25)"] <- 1
+					}else
+					{
+						## not all NAs
+						pvalues_sub <- pvalues_sub[!is.na(pvalues_sub)]
+						if(sum(pvalues_sub[pvalues_sub<1])>0)
+						{
+							## not all ones
+							results_m["STAAR-B(1,25)"] <- CCT(pvalues_sub[pvalues_sub<1])
+
+						}else
+						{
+							results_m["STAAR-B(1,25)"] <- 1
+
+						}
+					}
+				}else
+				{
+					if(sum(pvalues_sub[pvalues_sub<1])>0)
+					{
+						results_m["STAAR-B(1,25)"] <- CCT(pvalues_sub[pvalues_sub<1])
+					}else
+					{
+						results_m["STAAR-B(1,25)"] <- 1
+					}
+				}
+				
+				results_missense_genome[kk,"STAAR-B(1,25)"] <- results_m["STAAR-B(1,25)"]
+				
+				## calculate STAAR-B(1,1)
+				pvalues_sub <- as.numeric(results_m[6:length(results_m)][c(1:apc_num+(apc_num+1))])
+				if(sum(is.na(pvalues_sub))>0)
+				{
+					if(sum(is.na(pvalues_sub))==length(pvalues_sub))
+					{
+						results_m["STAAR-B(1,1)"] <- 1
+					}else
+					{
+						## not all NAs
+						pvalues_sub <- pvalues_sub[!is.na(pvalues_sub)]
+						if(sum(pvalues_sub[pvalues_sub<1])>0)
+						{
+							## not all ones
+							results_m["STAAR-B(1,1)"] <- CCT(pvalues_sub[pvalues_sub<1])
+
+						}else
+						{
+							results_m["STAAR-B(1,1)"] <- 1
+
+						}
+					}
+				}else
+				{
+					if(sum(pvalues_sub[pvalues_sub<1])>0)
+					{
+						results_m["STAAR-B(1,1)"] <- CCT(pvalues_sub[pvalues_sub<1])
+					}else
+					{
+						results_m["STAAR-B(1,1)"] <- 1
+					}
+				}
+				
+				results_missense_genome[kk,"STAAR-B(1,1)"] <- results_m["STAAR-B(1,1)"]
+			}else
+			{
+				## disruptive missense cMAC < cut_off, set p-value to 1 
+				results_missense_genome[kk,"Burden(1,25)-Disruptive"] <- 1
+				results_missense_genome[kk,"Burden(1,1)-Disruptive"] <- 1
+				results_missense_genome[kk,"SKAT(1,25)-Disruptive"] <- 1
+				results_missense_genome[kk,"SKAT(1,1)-Disruptive"] <- 1			
+				results_missense_genome[kk,"ACAT-V(1,25)-Disruptive"] <- 1
+				results_missense_genome[kk,"ACAT-V(1,1)-Disruptive"] <- 1			
+				
+				apc_num <- (length(results_m)-19)/6
+				
+				p_seq <- c(1:apc_num,1:apc_num+(apc_num+1),1:apc_num+2*(apc_num+1),1:apc_num+3*(apc_num+1),1:apc_num+4*(apc_num+1),1:apc_num+5*(apc_num+1))
+
+				results_m["STAAR-O"] <- CCT(as.numeric(results_m[6:length(results_m)][p_seq]))
+				results_m["STAAR-S(1,25)"] <- CCT(as.numeric(results_m[6:length(results_m)][c(1:apc_num)]))
+				results_m["STAAR-S(1,1)"] <- CCT(as.numeric(results_m[6:length(results_m)][c(1:apc_num+(apc_num+1))]))
+				results_m["STAAR-B(1,25)"] <- CCT(as.numeric(results_m[6:length(results_m)][c(1:apc_num+2*(apc_num+1))]))
+				results_m["STAAR-B(1,1)"] <- CCT(as.numeric(results_m[6:length(results_m)][c(1:apc_num+3*(apc_num+1))]))
+				results_m["STAAR-A(1,25)"] <- CCT(as.numeric(results_m[6:length(results_m)][c(1:apc_num+4*(apc_num+1))]))
+				results_m["STAAR-A(1,1)"] <- CCT(as.numeric(results_m[6:length(results_m)][c(1:apc_num+5*(apc_num+1))]))
+			}
+		}
+	}
+
 	###### whole-genome results
 	# plof
 	save(results_plof_genome,file=paste0(output_path,"plof.Rdata"))
