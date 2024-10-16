@@ -196,7 +196,7 @@ Sliding_Window_Results_Summary <- function(agds_dir,jobs_num,input_path,output_p
 	{
 		print("Manhattan plot")
 
-		png(paste0(output_path,"sliding_window_manhattan.png"), width=12, height=8, units = 'in', res = 600)
+		png(paste0(output_path,"sliding_window_manhattan.png"), width=9, height=6, units = 'in', res = 600)
 
 		if(!use_SPA)
 		{
